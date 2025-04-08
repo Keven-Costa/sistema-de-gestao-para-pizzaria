@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzaria Delícia - Acompanhe seu Pedido</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .progress-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 25%;
+            float: left;
+        }
+        
+        .progress-step.completed .step-icon {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .progress-step.active .step-icon {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.2rem;
+        }
+        
+        .progress-bar {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: #dee2e6;
+            z-index: 1;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #dc3545;
+            width: 50%;
+            transition: width 0.5s ease;
+        }
+        
+        .delivery-person {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto 30px;
+        }
+        
+        .delivery-person img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .help-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 576px) {
+            .step-label {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="bg-danger py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://via.placeholder.com/50x50" alt="Logo da Pizzaria" class="me-2">
+                    <h1 class="text-white m-0">Acompanhe seu Pedido</h1>
+                </div>
+                <a href="#" class="btn btn-light">
+                    <i class="fas fa-chevron-left me-2"></i>Voltar
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="container my-5">
+        <!-- Número do Pedido -->
+        <div class="text-center mb-4">
+            <h3>Pedido #4567</h3>
+            <p class="text-muted">Status atual: <span class="text-danger fw-bold">Em preparo</span></p>
+        </div>
+        
+        <!-- Barra de Progresso -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
+            
+            <div class="progress-step completed">
+                <div class="step-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="step-label fw-bold">Recebido</div>
+                <small class="text-muted">15:20</small>
+            </div>
+            
+            <div class="progress-step active">
+                <div class="step-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="step-label fw-bold">Em preparo</div>
+                <small class="text-muted">15:25</small>
+            </div>
+            
+            <div class="progress-step">
+                <div class="step-icon">
+                    <i class="fas fa-motorcycle"></i>
+                </div>
+                <div class="step-label">Saiu para entrega</div>
+            </div>
+            
+            <div class="progress-step">
+                <div class="step-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="step-label">Entregue</div>
+            </div>
+            
+            <div style="clear: both;"></div>
+        </div>
+        
+        <!-- Tempo Estimado -->
+        <div class="alert alert-danger text-center mb-4">
+            <i class="fas fa-clock me-2"></i> Previsão de entrega: <strong>16:10 - 16:30</strong>
+        </div>
+        
+        <!-- Detalhes do Entregador (aparece quando o pedido sai para entrega) -->
+        <div class="delivery-person text-center" id="deliveryPerson" style="display: none;">
+            <h5 class="mb-3">Seu entregador</h5>
+            <div class="d-flex align-items-center justify-content-center mb-3">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Entregador">
+                <div class="text-start">
+                    <h6 class="m-0">João Silva</h6>
+                    <small class="text-muted">Placa: XYZ-1234</small>
+                </div>
+            </div>
+            <div class="alert alert-warning">
+                <i class="fas fa-motorcycle me-2"></i> Saiu para entrega às <strong>15:50</strong>
+            </div>
+        </div>
+        
+        <!-- Resumo do Pedido -->
+        <div class="card mt-4">
+            <div class="card-header bg-light">
+                <h5 class="m-0">Resumo do Pedido</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>1x Pizza Grande Supreme</span>
+                        <span>R$ 59,90</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>1x Borda Recheada</span>
+                        <span>R$ 8,00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>1x Coca-Cola 2L</span>
+                        <span>R$ 12,00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Taxa de entrega</span>
+                        <span>R$ 5,00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between fw-bold">
+                        <span>Total</span>
+                        <span>R$ 84,90</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão de Ajuda -->
+    <a href="https://wa.me/5511999999999?text=Preciso+de+ajuda+com+o+pedido+%234567" 
+       class="btn btn-danger btn-lg help-button">
+       <i class="fab fa-whatsapp me-2"></i>Preciso de ajuda
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Simulação: Mostrar detalhes do entregador quando o pedido "sai para entrega"
+        // Na implementação real, isso seria controlado pelo status real do pedido
+        setTimeout(function() {
+            document.getElementById('deliveryPerson').style.display = 'block';
+            document.querySelector('.progress-step:nth-child(3)').classList.add('active');
+            document.querySelector('.progress-bar-fill').style.width = '75%';
+        }, 5000); // Apenas para demonstração - remover em produção
+    </script>
+</body>
+</html>

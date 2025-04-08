@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Pedidos - Painel Administrativo</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-new {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-preparing {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-delivery {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-delivered {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-canceled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-late {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #721c24;
+        }
+        
+        .order-row:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .search-box {
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-pizza-slice me-2"></i>Pizzaria Delícia
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-list me-1"></i> Pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-cog me-1"></i> Configurações</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-sign-out-alt me-1"></i> Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-list me-2"></i>Gestão de Pedidos</h2>
+            <div class="search-box">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Pesquisar pedido ou cliente...">
+                    <button class="btn btn-danger" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filtros -->
+        <div class="mb-4">
+            <div class="btn-group" role="group">
+                <input type="radio" class="btn-check" name="statusFilter" id="filter-all" autocomplete="off" checked>
+                <label class="btn btn-outline-secondary" for="filter-all">Todos</label>
+                
+                <input type="radio" class="btn-check" name="statusFilter" id="filter-new" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="filter-new">Novos</label>
+                
+                <input type="radio" class="btn-check" name="statusFilter" id="filter-preparing" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="filter-preparing">Em preparo</label>
+                
+                <input type="radio" class="btn-check" name="statusFilter" id="filter-delivery" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="filter-delivery">Em entrega</label>
+                
+                <input type="radio" class="btn-check" name="statusFilter" id="filter-delivered" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="filter-delivered">Entregues</label>
+            </div>
+        </div>
+        
+        <!-- Lista de Pedidos -->
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nº Pedido</th>
+                            <th>Cliente</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Pedido 1 - Atrasado -->
+                        <tr class="order-row">
+                            <td>#4570</td>
+                            <td>João Silva</td>
+                            <td>R$ 62,90</td>
+                            <td>
+                                <span class="status-badge status-late">
+                                    <i class="fas fa-clock me-1"></i>Atrasado
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-success me-1">
+                                    <i class="fas fa-check me-1"></i>Entregue
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fas fa-times me-1"></i>Cancelar
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Pedido 2 - Novo -->
+                        <tr class="order-row">
+                            <td>#4569</td>
+                            <td>Maria Oliveira</td>
+                            <td>R$ 89,90</td>
+                            <td>
+                                <span class="status-badge status-new">
+                                    Novo
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-success me-1" disabled>
+                                    <i class="fas fa-check me-1"></i>Entregue
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fas fa-times me-1"></i>Cancelar
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Pedido 3 - Em preparo -->
+                        <tr class="order-row">
+                            <td>#4568</td>
+                            <td>Carlos Souza</td>
+                            <td>R$ 45,90</td>
+                            <td>
+                                <span class="status-badge status-preparing">
+                                    Em preparo
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-success me-1" disabled>
+                                    <i class="fas fa-check me-1"></i>Entregue
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fas fa-times me-1"></i>Cancelar
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Pedido 4 - Em entrega -->
+                        <tr class="order-row">
+                            <td>#4567</td>
+                            <td>Ana Santos</td>
+                            <td>R$ 72,50</td>
+                            <td>
+                                <span class="status-badge status-delivery">
+                                    Em entrega
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-success me-1">
+                                    <i class="fas fa-check me-1"></i>Entregue
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fas fa-times me-1"></i>Cancelar
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!-- Pedido 5 - Entregue -->
+                        <tr class="order-row">
+                            <td>#4566</td>
+                            <td>Pedro Costa</td>
+                            <td>R$ 58,00</td>
+                            <td>
+                                <span class="status-badge status-delivered">
+                                    Entregue
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary me-1" disabled>
+                                    <i class="fas fa-check me-1"></i>Entregue
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" disabled>
+                                    <i class="fas fa-times me-1"></i>Cancelar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Paginação -->
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Próxima</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
