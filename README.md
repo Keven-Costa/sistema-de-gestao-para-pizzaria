@@ -20,7 +20,7 @@ Sistema completo para gestão operacional de pizzarias com controle de pedidos, 
 ## 🚀 Funcionalidades
 
 - **Pedidos**
-  - Registro de pedidos (balcão/telefone/delivery)
+  - Registro de pedidos 
   - Acompanhamento em tempo real
   - Histórico completo
 - **Estoque**
