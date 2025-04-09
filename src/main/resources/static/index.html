@@ -1,74 +1,260 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Página com Bootstrap</title>
+    <title>Pizzaria Delícia - Home</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 30px;
+        }
+        
+        .pizza-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .pizza-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .category-tab {
+            cursor: pointer;
+        }
+        
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Barra de navegação -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <!-- Cabeçalho -->
+    <header class="bg-danger py-3">
         <div class="container">
-            <a class="navbar-brand" href="#">Minha Página</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contato</a>
-                    </li>
-                </ul>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <img src="https://via.placeholder.com/50x50" alt="Logo da Pizzaria" class="me-2">
+                    <h1 class="text-white m-0">Pizzaria Delícia</h1>
+                </div>
+                <a href="#" class="btn btn-light btn-lg">Fazer Pedido <i class="fas fa-shopping-cart ms-2"></i></a>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Conteúdo principal -->
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-8">
-                <h1>Bem-vindo à minha página</h1>
-                <p class="lead">Esta é uma página simples usando Bootstrap 5.</p>
-                <p>Bootstrap facilita a criação de sites responsivos e modernos sem precisar escrever muito CSS.</p>
-                
-                <div class="alert alert-info mt-4">
-                    <strong>Dica:</strong> Você pode personalizar esta página como quiser!
+    <!-- Carrossel de Destaques -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h2 class="display-4 fw-bold">Promoção da Semana</h2>
+            <p class="lead">2 pizzas grandes por apenas R$ 80</p>
+            <a href="#" class="btn btn-danger btn-lg mt-3">Aproveite Agora</a>
+        </div>
+    </section>
+
+    <!-- Categorias -->
+    <section class="container mb-5">
+        <ul class="nav nav-tabs justify-content-center" id="pizzaTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active category-tab" id="especiais-tab" data-bs-toggle="tab" data-bs-target="#especiais" type="button" role="tab">Especiais</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link category-tab" id="tradicionais-tab" data-bs-toggle="tab" data-bs-target="#tradicionais" type="button" role="tab">Tradicionais</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link category-tab" id="doces-tab" data-bs-toggle="tab" data-bs-target="#doces" type="button" role="tab">Doces</button>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Cardápio em Grid -->
+    <section class="container mb-5">
+        <div class="tab-content" id="pizzaTabContent">
+            <!-- Aba Especiais -->
+            <div class="tab-pane fade show active" id="especiais" role="tabpanel">
+                <div class="row">
+                    <!-- Pizza 1 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=781&q=80" class="card-img-top" alt="Pizza Especial">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Supreme</h5>
+                                <p class="card-text">Pepperoni, cogumelos, pimentão, cebola e azeitonas.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 59,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pizza 2 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" class="card-img-top" alt="Pizza Especial">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Margherita</h5>
+                                <p class="card-text">Molho de tomate, mussarela fresca e manjericão.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 49,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pizza 3 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top" alt="Pizza Especial">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Quatro Queijos</h5>
+                                <p class="card-text">Mussarela, provolone, parmesão e gorgonzola.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 54,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pizza 4 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1574126154517-d1e0d89ef734?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" class="card-img-top" alt="Pizza Especial">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Calabresa</h5>
+                                <p class="card-text">Molho de tomate, mussarela e calabresa fatiada.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 52,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Links Úteis</h5>
+            <!-- Aba Tradicionais -->
+            <div class="tab-pane fade" id="tradicionais" role="tabpanel">
+                <div class="row">
+                    <!-- Pizza 1 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top" alt="Pizza Tradicional">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Portuguesa</h5>
+                                <p class="card-text">Presunto, ovos, cebola, ervilha e azeitonas.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 55,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item"><a href="https://getbootstrap.com" target="_blank">Documentação do Bootstrap</a></li>
-                            <li class="list-group-item"><a href="https://www.w3schools.com" target="_blank">W3Schools</a></li>
-                            <li class="list-group-item"><a href="https://github.com" target="_blank">GitHub</a></li>
-                        </ul>
+                    
+                    <!-- Pizza 2 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="card-img-top" alt="Pizza Tradicional">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Pepperoni</h5>
+                                <p class="card-text">Molho de tomate, mussarela e pepperoni.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 57,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Aba Doces -->
+            <div class="tab-pane fade" id="doces" role="tabpanel">
+                <div class="row">
+                    <!-- Pizza 1 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1557&q=80" class="card-img-top" alt="Pizza Doce">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Romeu e Julieta</h5>
+                                <p class="card-text">Mussarela e goiabada cremosa.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 48,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pizza 2 -->
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card pizza-card">
+                            <img src="https://images.unsplash.com/photo-1595708684082-a173bb3a06c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1452&q=80" class="card-img-top" alt="Pizza Doce">
+                            <div class="card-body">
+                                <h5 class="card-title">Pizza Chocolate</h5>
+                                <p class="card-text">Chocolate ao leite e morangos frescos.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="h5 text-danger">R$ 52,90</span>
+                                    <button class="btn btn-danger">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Rodapé -->
-    <footer class="bg-dark text-white text-center p-3 mt-4">
+    <footer>
         <div class="container">
-            <p>&copy; 2023 Minha Página. Todos os direitos reservados.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Horário de Funcionamento</h4>
+                    <ul class="list-unstyled">
+                        <li>Segunda a Quinta: 18h - 23h</li>
+                        <li>Sexta e Sábado: 18h - 00h</li>
+                        <li>Domingo: 18h - 22h</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Contato</h4>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> (11) 1234-5678</li>
+                        <li><i class="fas fa-envelope me-2"></i> contato@pizzariadelicia.com.br</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Rua das Pizzas, 123 - Centro</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>&copy; 2023 Pizzaria Delícia. Todos os direitos reservados.</p>
+                <div class="social-icons">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS (opcional, apenas se você precisar de componentes JS) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

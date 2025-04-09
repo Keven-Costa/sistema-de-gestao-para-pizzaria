@@ -8,6 +8,6 @@ public class HomeController {
     
     @GetMapping("/")
     public String mostrarHome() {
-        return "index"; // Redireciona para o arquivo em static/
+        return "forward:/index.html"; // Redireciona para o arquivo estático
     }
 }
