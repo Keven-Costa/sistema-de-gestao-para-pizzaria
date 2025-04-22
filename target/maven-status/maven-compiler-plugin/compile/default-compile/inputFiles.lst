@@ -1,3 +1,7 @@
 /home/keven/Área de trabalho/repositorios/sistema-de-gestao-para-pizzaria/src/main/java/com/company/pizzaria/SistemaDeGestaoParaPizzariaApplication.java
 /home/keven/Área de trabalho/repositorios/sistema-de-gestao-para-pizzaria/src/main/java/com/company/pizzaria/controller/AdminController.java
 /home/keven/Área de trabalho/repositorios/sistema-de-gestao-para-pizzaria/src/main/java/com/company/pizzaria/controller/ClientController.java
+/home/keven/Área de trabalho/repositorios/sistema-de-gestao-para-pizzaria/src/main/java/com/company/pizzaria/controller/IngredienteController.java
+/home/keven/Área de trabalho/repositorios/sistema-de-gestao-para-pizzaria/src/main/java/com/company/pizzaria/model/entity/Ingrediente.java
+/home/keven/Área de trabalho/repositorios/sistema-de-gestao-para-pizzaria/src/main/java/com/company/pizzaria/repository/IngredienteRepository.java
+/home/keven/Área de trabalho/repositorios/sistema-de-gestao-para-pizzaria/src/main/java/com/company/pizzaria/service/IngredienteService.java

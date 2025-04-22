@@ -7,28 +7,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ClientController {
     
     @GetMapping("/")
-    public String mostrarHome() {
-        return "forward:/index.html"; // Redireciona para o arquivo estático
+    public String exibirHome() {
+        return "forward:/index.html"; 
     }
     
     @GetMapping("/checkout")
-    public String mostrarCheckout() {
-        return "forward:/checkout.html"; // Redireciona para o arquivo estático
+    public String exibirCheckout() {
+        return "forward:/checkout.html"; 
     }
     
     @GetMapping("/confirmacao-pedido")
-    public String mostrarConfirmacaoPedido() {
-        return "forward:/confirmacao-pedido.html"; // Redireciona para o arquivo estático
+    public String exibirConfirmacaoPedidos() {
+        return "forward:/confirmacao-pedido.html"; 
     }
     
     @GetMapping("/montagem-pedido")
-    public String mostrarMontagemPedido() {
-        return "forward:/montagem-pedido.html"; // Redireciona para o arquivo estático
+    public String exibirMostrarMontagemPedido() {
+        return "forward:/montagem-pedido.html"; 
     }
     
     @GetMapping("/rastreamento-pedido")
-    public String mostrarRastreamentoPedido() {
-        return "forward:/rastreamento-pedido.html"; // Redireciona para o arquivo estático
+    public String exibirRastreamentoPedido() {
+        return "forward:/rastreamento-pedido.html"; 
     }
     
 }

@@ -1,3 +1,6 @@
 com/company/pizzaria/controller/AdminController.class
+com/company/pizzaria/controller/IngredienteController.class
+com/company/pizzaria/repository/IngredienteRepository.class
 com/company/pizzaria/SistemaDeGestaoParaPizzariaApplication.class
+com/company/pizzaria/model/entity/Ingrediente.class
 com/company/pizzaria/controller/ClientController.class

@@ -10,32 +10,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
     
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String exibirDashboard() {
         return "admin/dashboard";
     }
 
     @GetMapping({"/login", "/"})
-    public String loginPage() {
+    public String exibirLogin() {
         return "admin/login";
     }
     
-    @GetMapping("/gestao-ingredientes")
-    public String gestaoIngredientesPage() {
-        return "admin/gestao-ingredientes";
-    }
-    
     @GetMapping("/gestao-pedidos")
-    public String gestaoPedidoPage() {
+    public String exibirGestaoPedido() {
         return "admin/gestao-pedidos";
     }
     
-    @GetMapping("/painel-promocoes")  // Alterado para coincidir com o HTML
-    public String painelPromocoes() {
-        return "admin/painel-promocoes";
-    }
-    // Adicione também para Configurações e Sair se necessário
-    @GetMapping("/configuracoes")
-    public String configuracoes() {
-        return "admin/test";
+    @GetMapping("/form-ingrediente")
+    public String exibirFormIngrediente() {
+        return "admin/form-ingrediente";
     }
 }

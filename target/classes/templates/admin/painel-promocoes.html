@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Painel de Promoções - PizzaFast</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         .list-group-item.active {
             z-index: 2;
@@ -98,16 +98,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="./dashboard.html"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                        <a class="nav-link" href="./dashboard.html"><i class="fas fa-tachometer-alt me-1"></i>
+                            Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./gestao-pedidos.html"><i class="fas fa-list me-1"></i> Pedidos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./gestao-ingredientes.html"><i class="fas fa-boxes me-1"></i> Estoque</a>
+                        <a class="nav-link" href="./gestao-ingredientes.html"><i class="fas fa-boxes me-1"></i>
+                            Estoque</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="./painel-promocoes.html"><i class="fas fa-tag me-1"></i> Promoções</a>
+                        <a class="nav-link active" href="./painel-promocoes.html"><i class="fas fa-tag me-1"></i>
+                            Promoções</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-cog me-1"></i> Configurações</a>
@@ -141,29 +144,36 @@
             <!-- Seção: Criar Promoção -->
             <div id="criar" class="content-section">
                 <h4 class="mb-4">Nova Promoção</h4>
-                <form id="formPromocao">
+
+
+                <form th:action="@{/admin/painel-promocoes/salvar}" method="post" th:object="${promocao}">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Código</label>
-                            <input type="text" class="form-control" id="codigo" required>
+                            <input type="text" class="form-control" th:field="*{codigo}" required>
+                            <!-- Removi o id="codigo" pois não é necessário com th:field -->
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Tipo de Desconto</label>
-                            <select class="form-select" id="tipoDesconto">
-                                <option value="porcentagem">Porcentagem</option>
-                                <option value="fixo">Valor Fixo</option>
+                            <select class="form-select" th:field="*{tipoDesconto}" required>
+                                <option value="">Selecione...</option>
+                                <option th:each="tipo : ${T(com.company.pizzaria.model.enums.TipoDesconto).values()}"
+                                    th:value="${tipo}" th:text="${tipo.descricao}">
+                                </option>
                             </select>
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Valor</label>
-                            <input type="number" class="form-control" id="valor" step="0.01" required>
+                            <input type="number" class="form-control" step="0.01" th:field="*{valorDesconto}" required>
+                            <!-- Removi o id="valor" -->
                         </div>
 
                         <div class="col-md-6">
                             <label class="form-label">Validade</label>
-                            <input type="date" class="form-control" id="validade" required>
+                            <input type="date" class="form-control" th:field="*{validoAte}" required>
+                            <!-- Corrigi: troquei h:field por th:field -->
                         </div>
 
                         <div class="col-12">
@@ -189,8 +199,21 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="tabelaPromocoes">
-                            <!-- Dados dinâmicos via JS -->
+                        <tbody>
+                            <tr th:each="promocao : ${promocoes}">
+                                <td th:text="${promocao.codigo}"></td>
+                                <td th:text="${promocao.valorDesconto}"></td>
+                                <td th:text="${promocao.validoAte}"></td>
+                                <td>USOS</td>
+                                <td>AÇÕES</td>
+
+                                <td>
+                                    <button class="btn btn-sm btn-danger" onclick="invalidar(this)"
+                                        th:data-id="${promocao.id}" th:data-nome="${promocao.codigo}">
+                                        Invalidar
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -204,72 +227,100 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal de Confirmação -->
+        <div class="modal fade" id="confirmarExclusaoModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Exclusão</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir este ingrediente?</p>
+                        <p><strong>Nome:</strong> <span id="nomeIngredienteExcluir"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a id="btnConfirmarExclusao" href="#" class="btn btn-danger">Excluir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Simulação de dados
-        let promocoes = [
-            { codigo: "VERAO15", tipo: "porcentagem", valor: 15, validade: "2024-12-25", usos: 42, status: "ativa" },
-            { codigo: "PIZZA20", tipo: "fixo", valor: 20, validade: "2024-12-20", usos: 18, status: "ativa" }
-        ];
 
-        // Função para renderizar tabela
-        function renderizarTabela() {
-            const tbody = document.getElementById('tabelaPromocoes');
-            tbody.innerHTML = promocoes.map(promo => `
-                <tr>
-                    <td>${promo.codigo}</td>
-                    <td>${promo.tipo === 'porcentagem' ? promo.valor + '%' : 'R$ ' + promo.valor}</td>
-                    <td>${new Date(promo.validade).toLocaleDateString()}</td>
-                    <td>${promo.usos}</td>
-                    <td>
-                        <button class="btn btn-sm btn-danger" onclick="invalidar('${promo.codigo}')">
-                            Invalidar
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // Esconde todas as seções de conteúdo
+            function hideAllSections() {
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.add('d-none');
+                });
+            }
 
-        // Função para invalidar promoção
-        function invalidar(codigo) {
-            promocoes = promocoes.filter(p => p.codigo !== codigo);
-            renderizarTabela();
-        }
+            // Mostra a seção clicada
+            document.querySelectorAll('.list-group-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    hideAllSections();
 
-        // Formulário de cadastro
-        document.getElementById('formPromocao').addEventListener('submit', function (e) {
-            e.preventDefault();
+                    // Remove a classe 'active' de todos os itens
+                    document.querySelectorAll('.list-group-item').forEach(i => {
+                        i.classList.remove('active');
+                    });
 
-            const novaPromocao = {
-                codigo: document.getElementById('codigo').value,
-                tipo: document.getElementById('tipoDesconto').value,
-                valor: parseFloat(document.getElementById('valor').value),
-                validade: document.getElementById('validade').value,
-                usos: 0,
-                status: "ativa"
-            };
+                    // Adiciona 'active' ao item clicado
+                    this.classList.add('active');
 
-            promocoes.push(novaPromocao);
-            renderizarTabela();
-            this.reset();
-        });
-
-        // Navegação entre abas
-        document.querySelectorAll('.list-group-item').forEach(item => {
-            item.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('d-none'));
-                document.querySelector(this.getAttribute('href')).classList.remove('d-none');
-                document.querySelectorAll('.list-group-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
+                    // Mostra a seção correspondente
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId)?.classList.remove('d-none');
+                });
             });
+
+            // Mostra a primeira seção por padrão
+            document.querySelector('.list-group-item.active')?.click();
         });
 
-        // Inicialização
-        renderizarTabela();
+
+        // function invalidar(button) {
+        //     // Obtém os atributos data- do botão passado como parâmetro
+        //     const id = button.dataset.id;
+        //     const codigo = button.dataset.nome;
+
+        //     if (confirm(`Tem certeza que deseja invalidar a promoção ${codigo}?`)) {
+        //         window.location.href = `/admin/painel-promocoes/invalidar/${id}`;
+        //     }
+        // }
+
+        function invalidar(button) {
+            // Obtém os atributos data- do botão
+            const id = button.dataset.id;
+            const codigo = button.dataset.nome;
+
+            // Atualiza a mensagem do modal
+            document.getElementById('modalMessage').textContent = `Tem certeza que deseja invalidar a promoção ${codigo}?`;
+
+            // Configura o link de confirmação
+            const confirmButton = document.getElementById('confirmButton');
+            confirmButton.href = `/admin/painel-promocoes/invalidar/${id}`;
+
+            // Mostra o modal
+            const modal = new bootstrap.Modal(document.getElementById('confirmarExclusaoModal'));
+            modal.show();
+        }
+
+
+        document.getElementById('btn-invalidar').addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+
+
+            document.getElementById('nomeIngredienteExcluir').textContent = nome;
+            document.getElementById('btnConfirmarExclusao').href = '/admin/novo-gestao-ingredientes/excluir/' + id;
+        });
     </script>
 </body>
 
