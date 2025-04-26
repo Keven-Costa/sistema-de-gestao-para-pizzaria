@@ -19,10 +19,10 @@ public class AdminController {
         return "admin/login";
     }
     
-    @GetMapping("/gestao-pedidos")
-    public String exibirGestaoPedido() {
-        return "admin/gestao-pedidos";
-    }
+//    @GetMapping("/gestao-pedidos")
+//    public String exibirGestaoPedido() {
+//        return "admin/gestao-pedidos";
+//    }
     
     @GetMapping("/form-ingrediente")
     public String exibirFormIngrediente() {

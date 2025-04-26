@@ -110,6 +110,7 @@
                     </button>
                 </div>
             </div>
+            
         </div>
 
         <!-- Filtros -->
@@ -135,118 +136,89 @@
         <!-- Lista de Pedidos -->
         <div class="card">
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Nº Pedido</th>
-                            <th>Cliente</th>
-                            <th>Valor</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Pedido 1 - Atrasado -->
-                        <tr class="order-row">
-                            <td>#4570</td>
-                            <td>João Silva</td>
-                            <td>R$ 62,90</td>
-                            <td>
-                                <span class="status-badge status-late">
-                                    <i class="fas fa-clock me-1"></i>Atrasado
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-success me-1">
-                                    <i class="fas fa-check me-1"></i>Entregue
-                                </button>
-                                <button class="btn btn-sm btn-danger">
-                                    <i class="fas fa-times me-1"></i>Cancelar
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Pedido 2 - Novo -->
-                        <tr class="order-row">
-                            <td>#4569</td>
-                            <td>Maria Oliveira</td>
-                            <td>R$ 89,90</td>
-                            <td>
-                                <span class="status-badge status-new">
-                                    Novo
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-success me-1" disabled>
-                                    <i class="fas fa-check me-1"></i>Entregue
-                                </button>
-                                <button class="btn btn-sm btn-danger">
-                                    <i class="fas fa-times me-1"></i>Cancelar
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Pedido 3 - Em preparo -->
-                        <tr class="order-row">
-                            <td>#4568</td>
-                            <td>Carlos Souza</td>
-                            <td>R$ 45,90</td>
-                            <td>
-                                <span class="status-badge status-preparing">
-                                    Em preparo
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-success me-1" disabled>
-                                    <i class="fas fa-check me-1"></i>Entregue
-                                </button>
-                                <button class="btn btn-sm btn-danger">
-                                    <i class="fas fa-times me-1"></i>Cancelar
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Pedido 4 - Em entrega -->
-                        <tr class="order-row">
-                            <td>#4567</td>
-                            <td>Ana Santos</td>
-                            <td>R$ 72,50</td>
-                            <td>
-                                <span class="status-badge status-delivery">
-                                    Em entrega
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-success me-1">
-                                    <i class="fas fa-check me-1"></i>Entregue
-                                </button>
-                                <button class="btn btn-sm btn-danger">
-                                    <i class="fas fa-times me-1"></i>Cancelar
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Pedido 5 - Entregue -->
-                        <tr class="order-row">
-                            <td>#4566</td>
-                            <td>Pedro Costa</td>
-                            <td>R$ 58,00</td>
-                            <td>
-                                <span class="status-badge status-delivered">
-                                    Entregue
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn btn-sm btn-outline-secondary me-1" disabled>
-                                    <i class="fas fa-check me-1"></i>Entregue
-                                </button>
-                                <button class="btn btn-sm btn-outline-secondary" disabled>
-                                    <i class="fas fa-times me-1"></i>Cancelar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<table class="table table-hover mb-0">
+    <thead class="table-light">
+        <tr>
+            <th>Nº Pedido</th>
+            <th>Cliente</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Iteração sobre os pedidos -->
+        <tr th:each="pedido : ${pedidos}" class="order-row">
+            <td th:text="${pedido.id}"></td>
+            <td th:text="${pedido.cliente.nome}"></td>
+            <td th:text="|R$ ${#numbers.formatDecimal(pedido.total, 1, 2, 'POINT')}|"></td>
+            
+            <!-- Coluna de Status -->
+			<td>
+			    <span th:if="${pedido.status?.name() == 'PENDENTE'}" class="status-badge status-pending">
+			        <i class="fas fa-hourglass-half me-1"></i> Pendente
+			    </span>
+			    
+			    <span th:if="${pedido.status?.name() == 'EM_PREPARO'}" class="status-badge status-preparing">
+			        <i class="fas fa-utensils me-1"></i> Em preparo
+			    </span>
+			    
+			    <span th:if="${pedido.status?.name() == 'ENVIADO'}" class="status-badge status-sent">
+			        <i class="fas fa-truck me-1"></i> Enviado
+			    </span>
+			    
+			    <span th:if="${pedido.status?.name() == 'ENTREGUE'}" class="status-badge status-delivered">
+			        <i class="fas fa-check me-1"></i> Entregue
+			    </span>
+			    
+			    <span th:if="${pedido.status?.name() == 'CANCELADO'}" class="status-badge status-cancelled">
+			        <i class="fas fa-times me-1"></i> Cancelado
+			    </span>
+			    
+			    <span th:if="${pedido.status?.name() == 'ATRASADO'}" class="status-badge status-late">
+			        <i class="fas fa-clock me-1"></i> Atrasado
+			    </span>
+			    
+			    <span th:if="${pedido.status?.name() == 'NOVO'}" class="status-badge status-new">
+			        <i class="fas fa-star me-1"></i> Novo
+			    </span>
+			</td>
+            
+            <!-- Coluna de Ações -->
+            <td>
+                <div class="btn-group" role="group">
+                    <!-- Botão Entregue - visível apenas para pedidos enviados -->
+                    <button th:if="${pedido.status == 'ENVIADO'}" 
+                            class="btn btn-sm btn-success me-1"
+                            th:data-id="${pedido.id}">
+                        <i class="fas fa-check me-1"></i> Entregue
+                    </button>
+                    
+                    <!-- Botão Cancelar - visível para pedidos não finalizados -->
+                    <button th:if="${pedido.status != 'ENTREGUE' &amp;&amp; pedido.status != 'CANCELADO'}" 
+                            class="btn btn-sm btn-danger"
+                            th:data-id="${pedido.id}">
+                        <i class="fas fa-times me-1"></i> Cancelar
+                    </button>
+                    
+                    <!-- Botão Preparar - visível para pedidos pendentes -->
+                    <button th:if="${pedido.status == 'PENDENTE'}" 
+                            class="btn btn-sm btn-primary me-1"
+                            th:data-id="${pedido.id}">
+                        <i class="fas fa-utensils me-1"></i> Preparar
+                    </button>
+                    
+                    <!-- Botão Enviar - visível para pedidos em preparo -->
+                    <button th:if="${pedido.status == 'EM_PREPARO'}" 
+                            class="btn btn-sm btn-warning"
+                            th:data-id="${pedido.id}">
+                        <i class="fas fa-truck me-1"></i> Enviar
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
             </div>
         </div>
 

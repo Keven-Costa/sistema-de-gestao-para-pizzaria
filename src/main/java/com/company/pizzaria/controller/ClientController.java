@@ -21,9 +21,9 @@ public class ClientController {
         return "forward:/confirmacao-pedido.html"; 
     }
     
-    @GetMapping("/montagem-pedido")
+    @GetMapping("/montagem-pedidos")
     public String exibirMostrarMontagemPedido() {
-        return "forward:/montagem-pedido.html"; 
+        return "forward:/montagem-pedidos.html"; 
     }
     
     @GetMapping("/rastreamento-pedido")

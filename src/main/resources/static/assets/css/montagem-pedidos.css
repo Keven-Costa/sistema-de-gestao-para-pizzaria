@@ -1,0 +1,113 @@
+.size-selector .btn {
+    flex: 1;
+}
+
+.pizza-image {
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.floating-cart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.half-pizza-select {
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.addon-item {
+    border-left: 3px solid #dc3545;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .floating-cart {
+        width: 100%;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+    }
+}
+
+.offcanvas-body {
+    transition: all 0.3s ease;
+}
+
+.cart-item-enter {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.cart-item-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.3s ease;
+}
+
+/* Estilos da notificação */
+.cart-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(150%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.cart-notification.show {
+    transform: translateX(0);
+}
+
+.cart-notification .icon {
+    font-size: 24px;
+}
+
+.cart-notification .close-btn {
+    margin-left: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.cart-notification .close-btn:hover {
+    opacity: 1;
+}
+
+/* Estilos do botão de exemplo */
+.add-to-cart-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 20px;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #0056b3;
+}
