@@ -64,8 +64,6 @@ function pegarItensDoPedido() {
         adicionarAoCarrinho(cocaCola, valorCoca);
     }
 
-    // Salvar no localStorage
-    localStorage.setItem('carrinhoItens', JSON.stringify(carrinhoItens));
 }
 
 function adicionarAoCarrinho(nome, preco) {
@@ -129,7 +127,7 @@ function atualizarCarrinho() {
 
         itemElement.innerHTML = `
             <span>${item.nome} (${item.quantidade}x) - R$ ${subtotal.toFixed(2)}</span>
-
+            <p>${item.preco}</p>
             <div>
                 <button class="btn btn-sm btn-outline-danger px-2 py-0" onclick="removerDoCarrinho('${item.nome}')">
                     <i class="fas fa-minus"></i>
@@ -140,14 +138,12 @@ function atualizarCarrinho() {
                 </button>
             </div>
                                                                         
-
         `;
 
         itensCarrinho.appendChild(itemElement);
 
         const itemHtml = document.getElementById('quantidadeItens')
         const quantidadeItens = document.querySelectorAll('#itens-carrinho .item-carrinho').length;
-        console.log(`O carrinho tem ${quantidadeItens} itens.`);
 
         itemHtml.innerHTML = `
 
@@ -188,8 +184,6 @@ function handleStuffedCrust(checkbox) {
     const valorSpan = document.getElementById('valorBordaRecheada');
     const valorTexto = valorSpan.textContent.trim();
 
-    console.log('Nome:', nomeProduto);
-    console.log('Valor:', valorTexto);
 
     if (checkbox.checked) {
         document.getElementById("resumoAdcionalBordaRecheada").textContent = nomeProduto;
@@ -212,8 +206,6 @@ function handleExtraSauce(checkbox) {
     const valorSpan = document.getElementById('valorMolhoExtra');
     const valorTexto = valorSpan.textContent.trim(); // "+ R$ 12,00"
 
-    console.log('Nome:', nomeProduto); // "Coca-Cola 2L"
-    console.log('Valor:', valorTexto); // "R$ 12,00"
 
     if (checkbox.checked) {
         document.getElementById("resumoAdcionalMolhoExtra").textContent = nomeProduto;
@@ -236,8 +228,6 @@ function handleCoke(checkbox) {
     const valorSpan = document.getElementById('valorCocaCola');
     const valorTexto = valorSpan.textContent.trim(); // "+ R$ 12,00"
 
-    console.log('Nome:', nomeProduto); // "Coca-Cola 2L"
-    console.log('Valor:', valorTexto); // "R$ 12,00"
 
     if (checkbox.checked) {
         document.getElementById("resumoAdcionalCocaCola").textContent = nomeProduto;
@@ -275,6 +265,7 @@ function calcularTotal() {
     return total;
 }
 
+
 // Seleciona os elementos
 const addToCartBtn = document.getElementById('botaoAdicionarAoCarrinho');
 const cartNotification = document.getElementById('cartNotification');
@@ -296,3 +287,59 @@ closeNotification.addEventListener('click', () => {
     cartNotification.classList.remove('show');
 });
 
+
+
+
+
+// function pegarItensDoCarrinho() {
+//     const itens = [];
+//     const elementos = document.querySelectorAll("#itens-carrinho .item-carrinho");
+
+//     elementos.forEach((item) => {
+//         const texto = item.querySelector("span").textContent;
+//         const match = texto.match(/^(.*?) \((\d+)x\) \- R\$ (\d+\.?\d*)/);
+
+//         if (match) {
+//             itens.push({
+//                 nome: match[1].trim(),
+//                 quantidade: parseInt(match[2]),
+//                 preco: parseFloat(match[3])
+//             });
+//             console.log(item)
+//         }
+//     });
+
+//     return itens;
+// }
+
+function pegarItensDoCarrinho() {
+    const itens = [];
+    const elementos = document.querySelectorAll("#itens-carrinho .item-carrinho");
+
+    elementos.forEach((item) => {
+        const texto = item.querySelector("span").textContent;
+        const precoNormalTexto = item.querySelector("p").textContent;
+
+        const match = texto.match(/^(.*?) \((\d+)x\) - R\$ (\d+\.?\d*)/);
+
+        if (match) {
+            itens.push({
+                nome: match[1].trim(),
+                quantidade: parseInt(match[2]),
+                precoTotal: parseFloat(match[3]),  // Preço total que vem no span
+                precoUnitario: parseFloat(precoNormalTexto)  // Preço normal que vem no p
+            });
+            console.log(item);
+        }
+    });
+
+    return itens;
+}
+
+
+function irParaCheckout() {
+    const itens = pegarItensDoCarrinho();
+    console.log(itens)
+    localStorage.setItem("carrinho", JSON.stringify(itens));
+    window.location.href = "checkout.html";
+}
