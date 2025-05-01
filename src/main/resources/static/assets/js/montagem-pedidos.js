@@ -341,5 +341,5 @@ function irParaCheckout() {
     const itens = pegarItensDoCarrinho();
     console.log(itens)
     localStorage.setItem("carrinho", JSON.stringify(itens));
-    window.location.href = "checkout.html";
+    window.location.href = "checkout";
 }

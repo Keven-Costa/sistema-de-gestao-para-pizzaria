@@ -30,8 +30,6 @@ window.onload = function () {
     selectPayment('cash');
 };
 
-
-
 function limpa_formulário_cep() {
     //Limpa valores do formulário de cep.
     document.getElementById('rua').value = ("");
@@ -95,11 +93,11 @@ function pesquisacep(valor) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const itensSalvos = localStorage.getItem("carrinho");
-    console.log(itensSalvos)
+    //console.log(itensSalvos)
 
     if (itensSalvos) {
         const itens = JSON.parse(itensSalvos);
-        console.log(itens)
+        //console.log(itens)
         const listaCheckout = document.getElementById("lista-checkout");
         let total = 0;
 
@@ -120,3 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("total").textContent = `Total: R$ ${total.toFixed(2)}`;
     }
 });
+
+
+function enviarFormulario() {
+    const form = document.getElementById("meuFormulario");
+    form.submit(); // Envia programaticamente
+}

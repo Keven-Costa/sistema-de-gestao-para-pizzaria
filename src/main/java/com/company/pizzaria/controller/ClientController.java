@@ -8,27 +8,27 @@ public class ClientController {
     
     @GetMapping("/")
     public String exibirHome() {
-        return "forward:/index.html"; 
+        return "index"; 
     }
     
-    @GetMapping("/checkout")
+    @GetMapping("/carrinho")
     public String exibirCheckout() {
-        return "forward:/checkout.html"; 
+        return "carrinho"; 
     }
     
     @GetMapping("/confirmacao-pedido")
     public String exibirConfirmacaoPedidos() {
-        return "forward:/confirmacao-pedido.html"; 
+        return "confirmacao-pedido"; 
     }
     
     @GetMapping("/montagem-pedidos")
     public String exibirMostrarMontagemPedido() {
-        return "forward:/montagem-pedidos.html"; 
+        return "montagem-pedidos"; 
     }
     
     @GetMapping("/rastreamento-pedido")
     public String exibirRastreamentoPedido() {
-        return "forward:/rastreamento-pedido.html"; 
+        return "rastreamento-pedido"; 
     }
     
 }

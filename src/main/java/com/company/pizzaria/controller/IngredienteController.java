@@ -62,5 +62,6 @@ public class IngredienteController {
 			return "redirect:/admin/novo-gestao-ingredientes?erro=Erro ao excluir ingrediente";
 		}
 	}
+	
 
 }

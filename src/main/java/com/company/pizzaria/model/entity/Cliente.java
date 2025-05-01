@@ -1,9 +1,11 @@
 package com.company.pizzaria.model.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -11,7 +13,8 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "clientes",
        uniqueConstraints = {
-           @UniqueConstraint(columnNames = "telefone", name = "uk_cliente_telefone")
+           @UniqueConstraint(columnNames = "telefone", name = "uk_cliente_telefone"),
+           @UniqueConstraint(columnNames = "email", name = "uk_cliente_email")
        })
 public class Cliente {
 
@@ -24,35 +27,54 @@ public class Cliente {
     @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
-
+    
+    @Pattern(regexp = "^\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}$", 
+             message = "CPF inválido")
+    @Column(name = "cpf", length = 14)
+    private String cpf;
+    
+    @Column(name = "data_nascimento")
+    private LocalDate dataNascimento;
+    
     @NotBlank(message = "O telefone é obrigatório")
     @Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?[\\d]{4,5}[\\s-]?[\\d]{4}$", 
              message = "Telefone inválido")
-    @Column(name = "telefone", nullable = false, unique = true, length = 20)
+    @Column(name = "telefone", unique = true, length = 20)
     private String telefone;
 
+    @NotBlank(message = "O email é obrigatório")
+    @Email(message = "Email inválido")
     @Size(max = 100, message = "O email deve ter no máximo 100 caracteres")
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", 
-             message = "Email inválido")
-    @Column(name = "email", length = 100)
+    @Column(name = "email", unique = true, length = 100)
     private String email;
-
-    @NotBlank(message = "O endereço é obrigatório")
-    @Column(name = "endereco", nullable = false, columnDefinition = "TEXT")
-    private String endereco;
     
-    @Column(name = "data_cadastro", updatable = false)
+    @NotBlank(message = "A senha é obrigatória")
+    @Column(name = "senha")
+    private String senha;  // Renomeado para 'senha' (hash será tratado no service)
+
+    @Column(name = "data_cadastro")
     private LocalDateTime dataCadastro;
 
     // Construtores
     public Cliente() {
     }
 
-    public Cliente(String nome, String telefone, String email, String endereco) {
+    // Construtor básico para testes
+    public Cliente(String nome, String telefone, String email) {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
-        this.endereco = endereco;
+    }
+
+    // Construtor completo
+    public Cliente(String nome, String cpf, LocalDate dataNascimento, 
+                  String telefone, String email, String senha) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
     }
 
     // Getters e Setters
@@ -72,6 +94,22 @@ public class Cliente {
         this.nome = nome;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     public String getTelefone() {
         return telefone;
     }
@@ -88,24 +126,23 @@ public class Cliente {
         this.email = email;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
-    
 
     public LocalDateTime getDataCadastro() {
-		return dataCadastro;
-	}
+        return dataCadastro;
+    }
 
-	public void setDataCadastro(LocalDateTime dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
 
-	// equals e hashCode
+    // equals e hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -114,18 +151,12 @@ public class Cliente {
         return Objects.equals(id, cliente.id);
     }
     
-    // Método pré-persist para definir a data de cadastro automaticamente
-    @PrePersist
-    protected void onCreate() {
-        dataCadastro = LocalDateTime.now();
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
 
-    // toString para facilitar a visualização
+    // toString
     @Override
     public String toString() {
         return "Cliente{" +
@@ -133,7 +164,6 @@ public class Cliente {
                 ", nome='" + nome + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", email='" + email + '\'' +
-                ", dataCadastro=" + dataCadastro +
                 '}';
     }
 }

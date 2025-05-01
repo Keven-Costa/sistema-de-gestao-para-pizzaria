@@ -1,0 +1,28 @@
+.alert-icon {
+    color: #dc3545;
+    font-size: 1.2rem;
+    margin-right: 8px;
+}
+
+.low-stock {
+    background-color: #fff3cd;
+}
+
+.critical-stock {
+    background-color: #f8d7da;
+}
+
+.table-responsive {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add {
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+.action-buttons .btn {
+    padding: 5px 10px;
+    margin: 0 3px;
+}

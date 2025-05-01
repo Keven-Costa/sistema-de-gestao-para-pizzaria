@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "Enderecos")
+@Table(name = "enderecos")
 public class Endereco {
 
     @Id
@@ -16,57 +16,49 @@ public class Endereco {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
-
+    
+    @NotBlank
+    @Size(max = 10)
+    @Column(name = "cep", nullable = false, length = 10)
+    private String cep;
+    
     @NotBlank
     @Size(max = 100)
-    @Column(name = "logradouro", nullable = false, length = 100)
-    private String logradouro;
-
+    @Column(name = "rua", nullable = false, length = 100)
+    private String rua;
+    
     @NotBlank
     @Size(max = 10)
     @Column(name = "numero", nullable = false, length = 10)
     private String numero;
-
-    @Size(max = 50)
-    @Column(name = "complemento", length = 50)
-    private String complemento;
-
+    
     @NotBlank
     @Size(max = 50)
     @Column(name = "bairro", nullable = false, length = 50)
     private String bairro;
 
-    @NotBlank
-    @Size(max = 50)
-    @Column(name = "cidade", nullable = false, length = 50)
-    private String cidade;
-
-    @NotBlank
-    @Size(min = 2, max = 2)
-    @Column(name = "estado", nullable = false, length = 2)
-    private String estado;
-
-    @NotBlank
-    @Size(max = 10)
-    @Column(name = "cep", nullable = false, length = 10)
-    private String cep;
-
     @Size(max = 100)
     @Column(name = "referencia", length = 100)
     private String referencia;
+    
 
-    // Construtores
+    public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	// Construtores
     public Endereco() {
     }
 
     public Endereco(Cliente cliente, String logradouro, String numero, String bairro, 
                    String cidade, String estado, String cep) {
         this.cliente = cliente;
-        this.logradouro = logradouro;
         this.numero = numero;
         this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
         this.cep = cep;
     }
 
@@ -87,14 +79,6 @@ public class Endereco {
         this.cliente = cliente;
     }
 
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
     public String getNumero() {
         return numero;
     }
@@ -103,36 +87,12 @@ public class Endereco {
         this.numero = numero;
     }
 
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
     public String getBairro() {
         return bairro;
     }
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public String getCep() {
@@ -150,6 +110,7 @@ public class Endereco {
     public void setReferencia(String referencia) {
         this.referencia = referencia;
     }
+    
 
     // toString
     @Override
@@ -157,12 +118,8 @@ public class Endereco {
         return "Endereco{" +
                 "id=" + id +
                 ", cliente=" + (cliente != null ? cliente.getId() : null) +
-                ", logradouro='" + logradouro + '\'' +
                 ", numero='" + numero + '\'' +
-                ", complemento='" + complemento + '\'' +
                 ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", estado='" + estado + '\'' +
                 ", cep='" + cep + '\'' +
                 ", referencia='" + referencia + '\'' +
                 '}';
