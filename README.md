@@ -1,5 +1,5 @@
 
-# Sistema de Gestão para Pizzaria 🍕
+# Sistema de Gestão para Pizzaria 🍕 (Em Desenvolvimento ⚠️)
 
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow) 
 ![Docker](https://img.shields.io/badge/Docker-required-blue) 
