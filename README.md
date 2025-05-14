@@ -44,19 +44,24 @@ Sistema completo para gestão operacional de pizzarias com controle de pedidos, 
 | Docker Compose   | 1.29+         | `docker-compose -v`  |
 | RAM disponível   | 4GB           | -                    |
 
-## 🛠 Instalação
+## Rodando a aplicação com Docker
 
-### Método 1: Docker Simples
+### 1. Clone o repositório
 
-#### Construir a imagem:
+Primeiro, clone este repositório para a sua máquina:
+
 ```bash
-
-docker build -t pizzaria-app .
-```
-
-#### Executar container:
-```bash
-
-docker run -p 8081:8081 pizzaria-app
+git clone https://github.com/seu-usuario/gestao-pizzaria.git
 
 ```
+```bash
+cd gestao-pizzaria
+```
+
+### 2. Construção e execução dos containers
+```bash
+docker-compose up --build
+```
+
+### 3. Acessando a aplicação
+Após a execução do comando acima, a aplicação estará rodando em http://localhost:8080.
