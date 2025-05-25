@@ -16,12 +16,12 @@
 </head>
 
 <body>
-    <!-- Cabeçalho -->
+    <!-- Cabeçalho -->  
     <header class="bg-danger py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="logo.png" alt="Logo" class="me-2" height="40">
+                    <!-- <img src="logo.png" alt="Logo" class="me-2" height="40"> -->
                     <h1 class="text-white m-0 fs-4">Montar Pedido</h1>
                 </div>
                 <div>
@@ -47,13 +47,16 @@
             <!-- Coluna de Montagem do Pedido -->
             <div class="col-lg-8">
                 <!-- Imagem da Pizza -->
+
                 <div class="text-center mb-4">
-                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=781&q=80"
-                        alt="Pizza" class="img-fluid pizza-image">
+                    <img th:src="@{${pizza.imagem}}" class="img-fluid pizza-image" alt="Imagem da pizza">
                 </div>
 
                 <!-- Nome da Pizza -->
-                <h2 class="mb-4">Pizza </h2>
+                <h2 th:text="${pizza.nome}" id="nomePizza">Nome da Pizza</h2>
+                <p th:text="${pizza.descricao}">Descrição</p>
+
+
 
                 <!-- Seletor de Tamanho -->
                 <div class="mb-4">

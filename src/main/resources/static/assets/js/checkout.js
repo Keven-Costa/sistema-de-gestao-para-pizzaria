@@ -120,7 +120,161 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-function enviarFormulario() {
-    const form = document.getElementById("meuFormulario");
-    form.submit(); // Envia programaticamente
+
+
+
+
+
+
+// async function enviarFormulario() {
+//     const precoTotalTexto = document.getElementById("total").textContent; // "Total: R$ 59.90"
+//     const precoTotalNumero = parseFloat(precoTotalTexto.replace(/[^\d,.-]/g, '').replace(',', '.'));
+
+//     // 1. Coleta dados do formulário
+//     const formData = {
+//         nome: document.getElementById("nome").value,
+//         cep: document.getElementById("cep").value,
+//         rua: document.getElementById("rua").value,
+//         numero: document.getElementById("numero").value,
+//         bairro: document.getElementById("bairro").value,
+//         telefone: document.getElementById("telefone").value,
+//         referencia: document.getElementById("referencia").value || null,
+//         observacoes: document.getElementById("observacoes").value || null,
+//         preco_total: precoTotalNumero
+//     };
+
+//     // 2. Processa pagamento
+//     const metodoPagamento = document.querySelector('input[name="payment"]:checked')?.id;
+//     formData.pagamento = { tipo: metodoPagamento };
+
+//     if (metodoPagamento === 'cash' && document.getElementById('need-change').checked) {
+//         formData.pagamento.trocoPara = parseFloat(
+//             document.querySelector('#change-input input').value
+//         );
+//     }
+
+//     // 3. Processa itens
+//     const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+//     formData.itens = carrinho.map(item => ({
+//         nome: item.nome,
+//         quantidade: item.quantidade,
+//         preco: item.precoUnitario
+//     }));
+
+//     formData.itens.push({
+//         nome: "Taxa de Entrega",
+//         quantidade: 1,
+//         preco: 5.00
+//     });
+
+//     // 4. Envia JSON para o backend e trata resposta
+//     try {
+//         const response = await fetch("/checkout/salvar", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json"
+//             },
+//             body: JSON.stringify(formData)
+//         });
+
+//         if (!response.ok) {
+//             const errorData = await response.json();
+//             throw new Error(errorData.error || "Erro ao enviar pedido.");
+//         }
+
+//         const data = await response.json();
+
+//         alert(data.message || "Pedido enviado com sucesso!");
+//         localStorage.removeItem("carrinho");
+
+//         // Redireciona conforme o backend mandou
+//         if (data.redirectUrl) {
+//             window.location.href = data.redirectUrl;
+//         }
+
+//     } catch (error) {
+//         console.error("Erro:", error);
+//         alert("Falha ao enviar pedido: " + error.message);
+//     }
+// }
+
+
+async function enviarFormulario() {
+    const precoTotalTexto = document.getElementById("total").textContent; // Ex: "Total: R$ 59.90"
+    // Remove tudo que não é número, vírgula ou ponto e converte para número decimal
+    const precoTotalNumero = parseFloat(precoTotalTexto.replace(/[^\d,.-]/g, '').replace(',', '.'));
+
+    // 1. Coleta dados do formulário
+    const formData = {
+        nome: document.getElementById("nome").value,
+        cep: document.getElementById("cep").value,
+        rua: document.getElementById("rua").value,
+        numero: document.getElementById("numero").value,
+        bairro: document.getElementById("bairro").value,
+        telefone: document.getElementById("telefone").value,
+        referencia: document.getElementById("referencia").value || null,
+        observacoes: document.getElementById("observacoes").value || null,
+        preco_total: precoTotalNumero
+    };
+
+    // 2. Processa pagamento
+    const metodoPagamento = document.querySelector('input[name="payment"]:checked')?.id;
+    formData.pagamento = { tipo: metodoPagamento };
+
+    if (metodoPagamento === 'cash' && document.getElementById('need-change').checked) {
+        const trocoInput = document.querySelector('#change-input input').value;
+        formData.pagamento.trocoPara = trocoInput ? parseFloat(trocoInput) : 0;
+    }
+
+    // 3. Processa itens do carrinho
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    formData.itens = carrinho.map(item => ({
+        nome: item.nome,
+        quantidade: item.quantidade,
+        preco: item.precoUnitario
+    }));
+
+    // Adiciona taxa de entrega
+    formData.itens.push({
+        nome: "Taxa de Entrega",
+        quantidade: 1,
+        preco: 5.00
+    });
+
+    // 4. Envia para o backend e trata resposta
+    try {
+        const response = await fetch("/checkout/salvar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Erro ao enviar pedido.");
+        }
+
+        const data = await response.json();
+
+        alert(data.message || "Pedido enviado com sucesso!");
+        localStorage.removeItem("carrinho");
+
+        // SALVA resumo para a próxima página
+        if (data.resumo) {
+            localStorage.setItem("resumoPedido", JSON.stringify(data.resumo));
+        }
+
+        // Redireciona para a página de resumo
+        if (data.redirectUrl) {
+            window.location.href = data.redirectUrl;
+        }
+
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Falha ao enviar pedido: " + error.message);
+    }
 }
+
+

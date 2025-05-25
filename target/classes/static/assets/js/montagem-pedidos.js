@@ -2,8 +2,13 @@
 
 // Chamar atualizarCarrinho quando a página carregar para mostrar os itens existentes
 document.addEventListener('DOMContentLoaded', function () {
+    const carrinhoSalvo = localStorage.getItem('carrinhoItens');
+    if (carrinhoSalvo) {
+        carrinho = JSON.parse(carrinhoSalvo);
+    }
     atualizarCarrinho();
 });
+
 
 
 let carrinho = [];
@@ -83,6 +88,7 @@ function adicionarAoCarrinho(nome, preco) {
     }
 
     atualizarCarrinho();
+    localStorage.setItem('carrinhoItens', JSON.stringify(carrinho));
 }
 
 function removerDoCarrinho(nome) {
@@ -100,6 +106,7 @@ function removerDoCarrinho(nome) {
     }
 
     atualizarCarrinho();
+    localStorage.setItem('carrinhoItens', JSON.stringify(carrinho));
 }
 
 function atualizarCarrinho() {

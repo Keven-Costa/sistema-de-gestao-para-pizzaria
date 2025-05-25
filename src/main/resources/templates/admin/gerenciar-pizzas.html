@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Pizza - Admin</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <header class="bg-danger py-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="text-white">Painel Administrativo</h1>
+            <a href="/" class="btn btn-light">Voltar para Home</a>
+        </div>
+    </header>
+
+    <!-- Formulário para Adicionar Pizza -->
+    <div class="container">
+        <h2 class="mb-4">Adicionar Nova Pizza</h2>
+
+        <form action="/admin/salvar-pizza" method="post">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome da Pizza</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="tamanho" class="form-label">Tamanho</label>
+                <select class="form-control" id="tamanho" name="tamanho" required>
+                    <option disabled selected>Selecione o tamanho</option>
+                    <option value="PEQUENA">PEQUENA</option>
+                    <option value="MEDIA">MÉDIA</option>
+                    <option value="GRANDE">GRANDE</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo</label>
+                <select class="form-control" id="tipo" name="tipo" required>
+                    <option disabled selected>Selecione o tipo</option>
+                    <option value="TRADICIONAL">TRADICIONAL</option>
+                    <option value="ESPECIAL">ESPECIAL</option>
+                    <option value="DOCE">DOCE</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="imagemUrl" class="form-label">URL da Imagem</label>
+                <input type="text" class="form-control" id="imagemUrl" name="imagemUrl" required>
+            </div>
+
+            <button type="submit" class="btn btn-danger">Salvar Pizza</button>
+        </form>
+
+        <!-- Tabela de Gerenciamento de Pizzas -->
+        <div class="mt-5">
+            <h2 class="mb-3">Gerenciar Pizzas</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-danger text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Tamanho</th>
+                            <th>Imagem</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pizza : ${pizzas}">
+                            <td th:text="${pizza.id}">1</td>
+                            <td th:text="${pizza.nome}">Calabresa</td>
+                            <td th:text="${pizza.tipo}">Tradicional</td>
+                            <td th:text="${pizza.descricao}">Descrição</td>
+                            <td th:text="${pizza.tamanho}">MÉDIA</td>
+                            <td>
+                                <img th:src="${pizza.imagemUrl}" alt="Imagem da Pizza" width="80">
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-warning me-2" data-bs-toggle="modal"
+                                    data-bs-target="#editarModal" 
+                                    th:data-id="${pizza.id}" 
+                                    th:data-nome="${pizza.nome}"
+                                    th:data-descricao="${pizza.descricao}" 
+                                    th:data-tamanho="${pizza.tamanho}"
+                                    th:data-tipo="${pizza.tipo}"
+                                    th:data-imagemurl="${pizza.imagemUrl}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#excluirModal" 
+                                    th:data-id="${pizza.id}"
+                                    th:data-nome="${pizza.nome}">
+                                    <i class="fas fa-trash"></i> Excluir
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Pizza -->
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="formEditarPizza" th:action="@{/admin/editar-pizza/{id}(id=${pizza.id})}" method="post" class="modal-content">
+                <input type="hidden" id="pizzaId" name="id">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarModalLabel">Editar Pizza</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="pizzaNome" class="form-label">Nome da Pizza</label>
+                        <input type="text" class="form-control" id="pizzaNome" name="nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pizzaDescricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="pizzaDescricao" name="descricao" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pizzaTamanho" class="form-label">Tamanho</label>
+                        <select class="form-control" id="pizzaTamanho" name="tamanho" required>
+                            <option value="PEQUENA">PEQUENA</option>
+                            <option value="MEDIA">MÉDIA</option>
+                            <option value="GRANDE">GRANDE</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pizzaTipo" class="form-label">Tipo</label>
+                        <select class="form-control" id="pizzaTipo" name="tipo" required>
+                            <option value="TRADICIONAL">TRADICIONAL</option>
+                            <option value="ESPECIAL">ESPECIAL</option>
+                            <option value="DOCE">DOCE</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pizzaImagemUrl" class="form-label">URL da Imagem</label>
+                        <input type="text" class="form-control" id="pizzaImagemUrl" name="imagemUrl" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Excluir Pizza -->
+    <div class="modal fade" id="excluirModal" tabindex="-1" aria-labelledby="excluirModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="formExcluirPizza" th:action="@{/admin/excluir-pizza/{id}(id=${pizza.id})}" method="post" class="modal-content">
+                <input type="hidden" id="pizzaExcluirId" name="id">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="excluirModalLabel">Excluir Pizza</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir a pizza <strong id="nomePizzaExcluir"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para recarregar página se necessário -->
+    <script th:if="${refresh}">
+        setTimeout(() => window.location.reload(true), 500);
+    </script>
+
+    <!-- Script para preencher os modais com dados -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Modal de Edição
+            const editarModal = document.getElementById('editarModal');
+            if (editarModal) {
+                editarModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    document.getElementById('pizzaId').value = button.getAttribute('data-id');
+                    document.getElementById('pizzaNome').value = button.getAttribute('data-nome');
+                    document.getElementById('pizzaDescricao').value = button.getAttribute('data-descricao');
+                    document.getElementById('pizzaTamanho').value = button.getAttribute('data-tamanho');
+                    document.getElementById('pizzaTipo').value = button.getAttribute('data-tipo');
+                    document.getElementById('pizzaImagemUrl').value = button.getAttribute('data-imagemurl');
+                    
+                    // Atualiza a ação do formulário com o ID correto
+                    const form = document.getElementById('formEditarPizza');
+                    form.action = `/admin/editar-pizza/${button.getAttribute('data-id')}`;
+                });
+            }
+
+            // Modal de Exclusão
+            const excluirModal = document.getElementById('excluirModal');
+            if (excluirModal) {
+                excluirModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    document.getElementById('pizzaExcluirId').value = button.getAttribute('data-id');
+                    document.getElementById('nomePizzaExcluir').textContent = button.getAttribute('data-nome');
+                    
+                    // Atualiza a ação do formulário com o ID correto
+                    const form = document.getElementById('formExcluirPizza');
+                    form.action = `/admin/excluir-pizza/${button.getAttribute('data-id')}`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
