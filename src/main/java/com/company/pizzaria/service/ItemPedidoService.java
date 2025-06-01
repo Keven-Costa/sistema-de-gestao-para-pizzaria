@@ -12,27 +12,26 @@ import java.util.Optional;
 @Service
 public class ItemPedidoService {
 
-    @Autowired
-    private ItemPedidoRepository itemPedidoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
-    public List<ItemPedido> listarTodos() {
-        return itemPedidoRepository.findAll();
-    }
+	public List<ItemPedido> listarTodos() {
+		return itemPedidoRepository.findAll();
+	}
 
-    public Optional<ItemPedido> buscarPorId(Long id) {
-        return itemPedidoRepository.findById(id);
-    }
+	public Optional<ItemPedido> buscarPorId(Long id) {
+		return itemPedidoRepository.findById(id);
+	}
 
-    public ItemPedido salvar(ItemPedido itemPedido) {
-        return itemPedidoRepository.save(itemPedido);
-    }
+	public ItemPedido salvar(ItemPedido itemPedido) {
+		return itemPedidoRepository.save(itemPedido);
+	}
 
-    public void deletar(Long id) {
-        itemPedidoRepository.deleteById(id);
-    }
-    
-    public List<ItemPedido> buscarPorPedido(Pedido pedido) {
-        return itemPedidoRepository.findByPedido(pedido);
-    }
+	public void deletar(Long id) {
+		itemPedidoRepository.deleteById(id);
+	}
+
+	public List<ItemPedido> buscarPorPedido(Pedido pedido) {
+		return itemPedidoRepository.findByPedido(pedido);
+	}
 }
-

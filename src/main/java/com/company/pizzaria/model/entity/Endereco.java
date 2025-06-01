@@ -40,7 +40,7 @@ public class Endereco {
 
 	@Column(length = 255)
 	private String cep;
-	
+
 	@Column(length = 255)
 	private String referencia;
 }

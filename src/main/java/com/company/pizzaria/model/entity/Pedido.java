@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.company.pizzaria.model.enums.FormaPagamento;
 import com.company.pizzaria.model.enums.StatusPedidos;
 
 import jakarta.persistence.Column;
@@ -27,35 +28,37 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class Pedido {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-    @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-	
-    @ManyToOne
-    @JoinColumn(name = "endereco_id", nullable = false)
-    private Endereco endereco;
-	
-    @Column(nullable = false)
-    private LocalDateTime data;
-	
-    @Enumerated(EnumType.STRING)
+
+	@ManyToOne
+	@JoinColumn(name = "cliente_id", nullable = false)
+	private Cliente cliente;
+
+	@ManyToOne
+	@JoinColumn(name = "endereco_id", nullable = false)
+	private Endereco endereco;
+
+	@Column(nullable = false)
+	private LocalDateTime data;
+
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 100)
 	private StatusPedidos status;
-	
-    @Column(name = "forma_pagamento")
-    private String formaPagamento;
-    
-    @Column(length = 500)
-    private String observacoes;
-    
-    @Column(name = "preco_total", precision = 10, scale = 2, nullable = false)
-    private BigDecimal precoTotal;
-    
-    @OneToMany(mappedBy = "pedido")
-    private List<ItemPedido> itens;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "forma_pagamento")
+	private FormaPagamento formaPagamento;
+
+	@Column(length = 500)
+	private String observacoes;
+
+	@Column(name = "preco_total", precision = 10, scale = 2, nullable = false)
+	private BigDecimal precoTotal;
+
+	@OneToMany(mappedBy = "pedido")
+	private List<ItemPedido> itens;
+
 }

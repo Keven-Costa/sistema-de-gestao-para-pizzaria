@@ -3,193 +3,182 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Promoções - PizzaFast</title>
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" th:href="@{/assets/css/rastreamento-pedido.css}">
-
+    <!-- CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/painel-promocoes.css}">
 </head>
 
-<body class="container-fluid">
-    <!-- Barra de Navegação -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-pizza-slice me-2"></i>Pizzaria Delícia
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link " th:href="@{dashboard}"><i class="fas fa-tachometer-alt me-1"></i>
-                            Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{gestao-pedidos}"><i class="fas fa-list me-1"></i> Pedidos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{novo-gestao-ingredientes}"><i class="fas fa-boxes me-1"></i>
-                            Estoque</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active   " th:href="@{painel-promocoes}"><i class="fas fa-tag me-1"></i>
-                            Promoções</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{login}"><i class="fas fa-sign-out-alt me-1"></i> Sair</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <div class="row mt-4" style="min-height: calc(100vh - 120px);">
-        <!-- Menu Lateral -->
-        <div class="col-md-3 d-flex flex-column">
-            <div class="list-group sidebar-container">
-                <a href="#criar"
-                    class="list-group-item list-group-item-action active flex-grow-1 d-flex align-items-center justify-content-center">Criar
-                    Promoção</a>
-                <a href="#ativas"
-                    class="list-group-item list-group-item-action flex-grow-1 d-flex align-items-center justify-content-center">Promoções
-                    Ativas</a>
-                <a href="#expiradas"
-                    class="list-group-item list-group-item-action flex-grow-1 d-flex align-items-center justify-content-center">Expirando
-                    em Breve</a>
-            </div>
-        </div>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
 
-        <!-- Conteúdo Principal -->
-        <div class="col-md-9 content-container">
-            <!-- Seção: Criar Promoção -->
-            <div id="criar" class="content-section">
-                <h4 class="mb-4">Nova Promoção</h4>
-
-
-                <form th:action="@{/admin/painel-promocoes/salvar}" method="post" th:object="${promocao}">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Código</label>
-                            <input type="text" class="form-control" th:field="*{codigo}" required>
-                            <!-- Removi o id="codigo" pois não é necessário com th:field -->
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Tipo de Desconto</label>
-                            <select class="form-select" th:field="*{tipoDesconto}" required>
-                                <option value="">Selecione...</option>
-                                <option th:each="tipo : ${T(com.company.pizzaria.model.enums.TipoDesconto).values()}"
-                                    th:value="${tipo}" th:text="${tipo.descricao}">
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Valor</label>
-                            <input type="number" class="form-control" step="0.01" th:field="*{valorDesconto}" required>
-                            <!-- Removi o id="valor" -->
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Validade</label>
-                            <input type="date" class="form-control" th:field="*{validoAte}" required>
-                            <!-- Corrigi: troquei h:field por th:field -->
-                        </div>
-
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-success">Salvar Promoção</button>
-                        </div>
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+                <div class="container">
+                    <a class="navbar-brand" href="#"><i class="fas fa-pizza-slice me-2"></i>Pizzaria Delícia</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/admin/dashboard}">
+                                    <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/admin/gestao-pedidos}">
+                                    <i class="fas fa-list me-1"></i>Pedidos
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/admin/gestao-ingredientes}">
+                                    <i class="fas fa-boxes me-1"></i>Estoque
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" th:href="@{/admin/painel-promocoes}">
+                                    <i class="fas fa-tag me-1"></i>Promoções
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/admin/login}">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Sair
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/admin/gerenciar-pizzas}">
+                                    <i class="fas fa-list me-1"></i>Gerenciar Pizzas
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </form>
-            </div>
-
-            <!-- Seção: Promoções Ativas -->
-            <div id="ativas" class="content-section d-none">
-                <h4 class="mb-4">Promoções Ativas</h4>
-                <div class="alert alert-warning">2 promoções expiram em até 3 dias!</div>
-
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Desconto</th>
-                                <th>Validade</th>
-                                <th>Usos</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="promocao : ${promocoes}">
-                                <td th:text="${promocao.codigo}"></td>
-                                <td th:text="${promocao.valorDesconto}"></td>
-                                <td th:text="${promocao.validoAte}"></td>
-                                <td>USOS</td>
-                                <td>AÇÕES</td>
-
-                                <td>
-                                    <!-- <button class="btn btn-sm btn-danger" onclick="invalidar(this)"
-                                        th:data-id="${promocao.id}" th:data-nome="${promocao.codigo}">
-                                        Invalidar
-                                    </button> -->
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#confirmarExclusaoModal" data-acao="invalidar" data-id="123"
-                                        data-nome="Promoção de Verão">
-                                        Invalidar
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                </div>
+            </nav>
+        </nav>
+        <div class="row mt-4" style="min-height: calc(100vh - 120px);">
+            <!-- Menu Lateral -->
+            <div class="col-md-3 d-flex flex-column">
+                <div class="list-group sidebar-container">
+                    <a href="#criar"
+                        class="list-group-item list-group-item-action active flex-grow-1 d-flex align-items-center justify-content-center"
+                        data-bs-toggle="tab">Criar Promoção</a>
+                    <a href="#ativas"
+                        class="list-group-item list-group-item-action flex-grow-1 d-flex align-items-center justify-content-center"
+                        data-bs-toggle="tab">Promoções Ativas</a>
+                    <a href="#expiradas"
+                        class="list-group-item list-group-item-action flex-grow-1 d-flex align-items-center justify-content-center"
+                        data-bs-toggle="tab">Expirando em Breve</a>
                 </div>
             </div>
 
-            <!-- Seção: Expirando em Breve -->
-            <div id="expiradas" class="content-section d-none">
-                <h4 class="mb-2">Expirando em Breve</h4>
-                <div class="list-group" id="listaExpiracao">
-                    <!-- Dados dinâmicos via JS -->
+            <!-- Conteúdo Principal -->
+            <div class="col-md-9 content-container tab-content">
+                <!-- Criar Promoção -->
+                <div id="criar" class="content-section tab-pane fade show active">
+                    <h4 class="mb-4">Nova Promoção</h4>
+                    <form th:action="@{/admin/painel-promocoes/salvar}" th:object="${promocaoNova}" method="post">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Código</label>
+                                <input type="text" class="form-control" th:field="*{codigo}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Desconto</label>
+                                <select class="form-select" th:field="*{tipo}">
+                                    <option value="porcentagem">Porcentagem</option>
+                                    <option value="fixo">Valor Fixo</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Valor</label>
+                                <input type="number" class="form-control" th:field="*{valor}" step="0.01" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Validade</label>
+                                <input type="date" class="form-control" th:field="*{validade}" required>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success">Salvar Promoção</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </div>
-        </div>
 
-        <!-- Modal de Confirmação -->
-        <!-- Modal de Confirmação -->
-        <div class="modal fade" id="confirmarExclusaoModal" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirmar Exclusão</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Tem certeza que deseja excluir este ingrediente?</p>
-                        <p><strong>Nome:</strong> <span id="nomeIngredienteExcluir"></span></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a id="btnConfirmarExclusao" href="#" class="btn btn-danger">Excluir</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<!-- Promoções Ativas -->
+<div id="ativas" class="content-section tab-pane fade">
+    <h4 class="mb-4">Promoções Ativas</h4>
+    <div class="alert alert-warning" th:if="${expirando.size() > 0}">
+        <span th:text="${expirando.size()}"></span> promoções expiram em até 3 dias!
     </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Desconto</th>
+                    <th>Validade</th>
+                    <th>Usos</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="promo : ${ativas}">
+                    <td th:text="${promo.codigo}"></td>
+                    <td th:text="${promo.tipo == 'porcentagem' ? promo.valor+'%' : 'R$ '+promo.valor}">
+                    </td>
+                    <td th:text="${#temporals.format(promo.validade, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${promo.usos}"></td>
+                    <td>
+                        <form
+                            th:action="@{/admin/painel-promocoes/invalidar/{codigo}(codigo=${promo.codigo})}"
+                            method="post" style="display:inline;">
+                            <button class="btn btn-sm btn-warning" type="submit">Invalidar</button>
+                        </form>
+                        <form
+                            th:action="@{/admin/painel-promocoes/excluir/{codigo}(codigo=${promo.codigo})}"
+                            method="post" style="display:inline;" class="ms-2">
+                            <button class="btn btn-sm btn-danger" type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${ativas.size() == 0}">
+                    <td colspan="5" class="text-center">Nenhuma promoção ativa.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-
+                <!-- Expirando em Breve -->
+                <div id="expiradas" class="content-section tab-pane fade">
+                    <h4 class="mb-2">Expirando em Breve</h4>
+                    <div class="list-group">
+                        <div th:each="promo : ${expirando}" class="list-group-item">
+                            <strong th:text="${promo.codigo}"></strong> -
+                            <span th:text="${promo.tipo == 'porcentagem' ? promo.valor+'%' : 'R$ '+promo.valor}"></span>
+                            -
+                            Validade: <span th:text="${#temporals.format(promo.validade, 'dd/MM/yyyy')}"></span> -
+                            Usos: <span th:text="${promo.usos}"></span>
+                        </div>
+                        <div th:if="${expirando.size() == 0}" class="list-group-item text-muted">
+                            Nenhuma promoção expira em breve.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script th:src="@{/assets/js/painel-promocoes.js}"></script>
+
 </body>
 
 </html>

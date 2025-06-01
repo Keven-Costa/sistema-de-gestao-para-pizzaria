@@ -1,23 +1,23 @@
 .status-badge {
     padding: 5px 10px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
 }
 
-.status-new {
-    background-color: #d1ecf1;
-    color: #0c5460;
-}
-
-.status-preparing {
+.status-pending {
     background-color: #fff3cd;
     color: #856404;
 }
 
-.status-delivery {
+.status-preparing {
     background-color: #cce5ff;
     color: #004085;
+}
+
+.status-sent {
+    background-color: #fff3cd;
+    color: #856404;
 }
 
 .status-delivered {
@@ -25,7 +25,7 @@
     color: #155724;
 }
 
-.status-canceled {
+.status-cancelled {
     background-color: #f8d7da;
     color: #721c24;
 }
@@ -33,13 +33,56 @@
 .status-late {
     background-color: #f8d7da;
     color: #721c24;
-    border: 1px solid #721c24;
 }
 
-.order-row:hover {
-    background-color: #f8f9fa;
+.status-new {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-transition {
+    transition: all 0.3s ease;
+}
+
+.action-modal .modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.action-header {
+    background: linear-gradient(135deg, #dc3545, #a71d2a);
+    color: white;
+}
+
+.action-btn {
+    min-width: 120px;
+    margin: 5px;
+    transition: transform 0.2s;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-details-card {
+    border-left: 4px solid #dc3545;
+}
+
+.progress-container {
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #dc3545;
+    transition: width 0.5s;
 }
 
 .search-box {
-    max-width: 400px;
+    width: 300px;
 }

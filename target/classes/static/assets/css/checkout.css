@@ -8,12 +8,12 @@
 }
 
 .payment-method:hover,
-.payment-method.active {
+.payment-method.selected {
     border-color: #dc3545;
     background-color: rgba(220, 53, 69, 0.05);
 }
 
-.payment-method.active {
+.payment-method.selected {
     border-width: 2px;
 }
 

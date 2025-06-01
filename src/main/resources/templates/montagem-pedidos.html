@@ -9,19 +9,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- CSS -->
     <link th:href="@{/assets/css/montagem-pedidos.css}" rel="stylesheet">
-
-
 </head>
 
 <body>
-    <!-- Cabeçalho -->  
+
+    <!-- Cabeçalho -->
     <header class="bg-danger py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <!-- <img src="logo.png" alt="Logo" class="me-2" height="40"> -->
                     <h1 class="text-white m-0 fs-4">Montar Pedido</h1>
                 </div>
                 <div>
@@ -44,10 +42,11 @@
     <!-- Conteúdo Principal -->
     <div class="container mt-4 mb-5">
         <div class="row">
+
             <!-- Coluna de Montagem do Pedido -->
             <div class="col-lg-8">
-                <!-- Imagem da Pizza -->
 
+                <!-- Imagem da Pizza -->
                 <div class="text-center mb-4">
                     <img th:src="@{${pizza.imagem}}" class="img-fluid pizza-image" alt="Imagem da pizza">
                 </div>
@@ -55,7 +54,6 @@
                 <!-- Nome da Pizza -->
                 <h2 th:text="${pizza.nome}" id="nomePizza">Nome da Pizza</h2>
                 <p th:text="${pizza.descricao}">Descrição</p>
-
 
 
                 <!-- Seletor de Tamanho -->
@@ -127,7 +125,7 @@
                     <div class="addon-item">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="stuffed-crust"
-                                onclick="handleStuffedCrust(this)">
+                                onclick="atualizarBordaRecheada(this)">
                             <label class="form-check-label" for="stuffed-crust" id="bordaRecheada">
                                 Borda Recheada (Catupiry)
                                 <span class="text-danger float-end" id="valorBordaRecheada">+ R$ 8,00</span>
@@ -138,7 +136,7 @@
                     <div class="addon-item">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="extra-sauce"
-                                onclick="handleExtraSauce(this)">
+                                onclick="atualizarMolhoExtra(this)">
                             <label class="form-check-label" for="extra-sauce" id="molhoExtra">
                                 Molho Extra
                                 <span class="text-danger float-end" id="valorMolhoExtra">+ R$ 3,50</span>
@@ -148,7 +146,7 @@
 
                     <div class="addon-item">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="coke" onclick="handleCoke(this)">
+                            <input class="form-check-input" type="checkbox" id="coke" onclick="atualizarCocaCola(this)">
                             <label class="form-check-label" for="coke" id="CocaCola">
                                 Coca-Cola 2L
                                 <span class="text-danger float-end" id="valorCocaCola">+ R$ 12,00</span>
@@ -244,20 +242,6 @@
         </div>
     </div>
 
-
-    <!-- Carrinho  -->
-    <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart">
-        <div class="offcanvas-header bg-danger text-white">
-            <h5 class="offcanvas-title">
-                <i class="fas fa-shopping-cart me-2"></i>Seu Carrinho
-            </h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <p class="text-center">Seu carrinho está vazio</p>
-        </div>
-    </div> -->
-
     <!-- Carrinho Lateral -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart">
         <div class="offcanvas-header bg-danger text-white">
@@ -275,19 +259,15 @@
 
         <!-- Cupom de Desconto -->
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Cupom de desconto">
-            <button class="btn btn-outline-danger" type="button">Aplicar</button>
+            <input type="text" class="form-control" id="input-cupom" placeholder="Cupom de desconto">
+            <button class="btn btn-outline-danger" type="button" onclick="aplicarCupom()">Aplicar</button>
         </div>
 
         <div class="offcanvas-footer border-top p-3">
             <div class="d-flex justify-content-between mb-3">
-                <!-- <span class="fw-bold">Subtotal:</span>
-                <span class="fw-bold">R$ 79,90</span> -->
+
             </div>
-            <div class="d-flex justify-content-between mb-3">
-                <span>Frete:</span>
-                <span>Grátis</span>
-            </div>
+
             <div class="d-flex justify-content-between mb-3 fw-bold fs-5">
                 <span>Total:</span>
                 <span id="total-carrinho">R$ 79,90</span>
@@ -305,10 +285,8 @@
         <button class="close-btn" id="closeNotification">&times;</button>
     </div>
 
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script th:src="@{/assets/js/montagem-pedidos.js}"></script>
 
 </body>

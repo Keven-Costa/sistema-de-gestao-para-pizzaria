@@ -12,12 +12,12 @@ import org.springframework.data.repository.query.Param;
 import com.company.pizzaria.model.entity.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
-	// Corrigido - últimos 10 pedidos
+
 	List<Pedido> findTop10ByOrderByDataDesc();
 
-	// Pedidos de hoje
 	int countByDataBetween(LocalDateTime start, LocalDateTime end);
 
 	@Query("SELECT SUM(p.precoTotal) FROM Pedido p WHERE p.data >= :inicio AND p.data <= :fim")
-	Optional<BigDecimal> somarValorTotalPorPeriodo(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
+	Optional<BigDecimal> somarValorTotalPorPeriodo(	@Param("inicio") LocalDateTime inicio,
+													@Param("fim") LocalDateTime fim);
 }

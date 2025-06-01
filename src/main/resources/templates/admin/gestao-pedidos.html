@@ -9,41 +9,51 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/gestao-pedidos.css}">
-
 </head>
 
 <body>
-    <!-- Barra de Navegação -->
+    
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-pizza-slice me-2"></i>Pizzaria Delícia
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand" href="#"><i class="fas fa-pizza-slice me-2"></i>Pizzaria Delícia</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link "  th:href="@{dashboard}"><i class="fas fa-tachometer-alt me-1"></i>
-                            Dashboard</a>           
+                        <a class="nav-link" th:href="@{/admin/dashboard}">
+                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{gestao-pedidos}" ><i class="fas fa-list me-1"></i> Pedidos</a>
+                        <a class="nav-link active" th:href="@{/admin/gestao-pedidos}">
+                            <i class="fas fa-list me-1"></i>Pedidos
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  th:href="@{novo-gestao-ingredientes}"><i class="fas fa-boxes me-1"></i>
-                            Estoque</a>
+                        <a class="nav-link" th:href="@{/admin/gestao-ingredientes}">
+                            <i class="fas fa-boxes me-1"></i>Estoque
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " th:href="@{painel-promocoes}" ><i class="fas fa-tag me-1"></i>
-                            Promoções</a>
-                    </li>
+                        <a class="nav-link" th:href="@{/admin/painel-promocoes}">
+                            <i class="fas fa-tag me-1"></i>Promoções
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{login}" ><i class="fas fa-sign-out-alt me-1"></i> Sair</a>
+                        <a class="nav-link" th:href="@{/admin/login}">
+                            <i class="fas fa-sign-out-alt me-1"></i>Sair
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/gerenciar-pizzas}">
+                            <i class="fas fa-list me-1"></i>Gerenciar Pizzas
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -56,13 +66,13 @@
             <h2><i class="fas fa-list me-2"></i>Gestão de Pedidos</h2>
             <div class="search-box">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Pesquisar pedido ou cliente...">
-                    <button class="btn btn-danger" type="button">
+                    <input type="text" class="form-control" placeholder="Pesquisar pedido ou cliente..."
+                        id="searchInput">
+                    <button class="btn btn-danger" type="button" id="searchButton">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
             </div>
-            
         </div>
 
         <!-- Filtros -->
@@ -88,89 +98,73 @@
         <!-- Lista de Pedidos -->
         <div class="card">
             <div class="table-responsive">
-<table class="table table-hover mb-0">
-    <thead class="table-light">
-        <tr>
-            <th>Nº Pedido</th>
-            <th>Cliente</th>
-            <th>Valor</th>
-            <th>Status</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Iteração sobre os pedidos -->
-        <tr th:each="pedido : ${pedidos}" class="order-row">
-            <td th:text="${pedido.id}"></td>
-            <td th:text="${pedido.cliente.nome}"></td>
-            <td th:text="|R$ ${#numbers.formatDecimal(pedido.total, 1, 2, 'POINT')}|"></td>
-            
-            <!-- Coluna de Status -->
-			<td>
-			    <span th:if="${pedido.status?.name() == 'PENDENTE'}" class="status-badge status-pending">
-			        <i class="fas fa-hourglass-half me-1"></i> Pendente
-			    </span>
-			    
-			    <span th:if="${pedido.status?.name() == 'EM_PREPARO'}" class="status-badge status-preparing">
-			        <i class="fas fa-utensils me-1"></i> Em preparo
-			    </span>
-			    
-			    <span th:if="${pedido.status?.name() == 'ENVIADO'}" class="status-badge status-sent">
-			        <i class="fas fa-truck me-1"></i> Enviado
-			    </span>
-			    
-			    <span th:if="${pedido.status?.name() == 'ENTREGUE'}" class="status-badge status-delivered">
-			        <i class="fas fa-check me-1"></i> Entregue
-			    </span>
-			    
-			    <span th:if="${pedido.status?.name() == 'CANCELADO'}" class="status-badge status-cancelled">
-			        <i class="fas fa-times me-1"></i> Cancelado
-			    </span>
-			    
-			    <span th:if="${pedido.status?.name() == 'ATRASADO'}" class="status-badge status-late">
-			        <i class="fas fa-clock me-1"></i> Atrasado
-			    </span>
-			    
-			    <span th:if="${pedido.status?.name() == 'NOVO'}" class="status-badge status-new">
-			        <i class="fas fa-star me-1"></i> Novo
-			    </span>
-			</td>
-            
-            <!-- Coluna de Ações -->
-            <td>
-                <div class="btn-group" role="group">
-                    <!-- Botão Entregue - visível apenas para pedidos enviados -->
-                    <button th:if="${pedido.status == 'ENVIADO'}" 
-                            class="btn btn-sm btn-success me-1"
-                            th:data-id="${pedido.id}">
-                        <i class="fas fa-check me-1"></i> Entregue
-                    </button>
-                    
-                    <!-- Botão Cancelar - visível para pedidos não finalizados -->
-                    <button th:if="${pedido.status != 'ENTREGUE' &amp;&amp; pedido.status != 'CANCELADO'}" 
-                            class="btn btn-sm btn-danger"
-                            th:data-id="${pedido.id}">
-                        <i class="fas fa-times me-1"></i> Cancelar
-                    </button>
-                    
-                    <!-- Botão Preparar - visível para pedidos pendentes -->
-                    <button th:if="${pedido.status == 'PENDENTE'}" 
-                            class="btn btn-sm btn-primary me-1"
-                            th:data-id="${pedido.id}">
-                        <i class="fas fa-utensils me-1"></i> Preparar
-                    </button>
-                    
-                    <!-- Botão Enviar - visível para pedidos em preparo -->
-                    <button th:if="${pedido.status == 'EM_PREPARO'}" 
-                            class="btn btn-sm btn-warning"
-                            th:data-id="${pedido.id}">
-                        <i class="fas fa-truck me-1"></i> Enviar
-                    </button>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nº Pedido</th>
+                            <th>Cliente</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <!-- Iteração sobre os pedidos -->
+                        <tr th:each="pedido : ${pedidos}" class="order-row"
+                            th:attr="data-status=${pedido.status?.name()}">
+                            <td th:text="${pedido.id}"></td>
+                            <td th:text="${pedido.cliente.nome}"></td>
+                            <td th:text="|R$ ${#numbers.formatDecimal(pedido.precoTotal, 1, 2, 'POINT')}|"></td>
+
+                            <!-- Coluna de Status -->
+                            <td>
+                                <span th:if="${pedido.status?.name() == 'PENDENTE'}"
+                                    class="status-badge status-pending status-transition">
+                                    <i class="fas fa-hourglass-half me-1"></i> Pendente
+                                </span>
+
+                                <span th:if="${pedido.status?.name() == 'PROCESSANDO'}"
+                                    class="status-badge status-preparing status-transition">
+                                    <i class="fas fa-utensils me-1"></i> Em preparo
+                                </span>
+
+                                <span th:if="${pedido.status?.name() == 'ENVIADO'}"
+                                    class="status-badge status-sent status-transition">
+                                    <i class="fas fa-truck me-1"></i> Enviado
+                                </span>
+
+                                <span th:if="${pedido.status?.name() == 'ENTREGUE'}"
+                                    class="status-badge status-delivered status-transition">
+                                    <i class="fas fa-check me-1"></i> Entregue
+                                </span>
+
+                                <span th:if="${pedido.status?.name() == 'CANCELADO'}"
+                                    class="status-badge status-cancelled status-transition">
+                                    <i class="fas fa-times me-1"></i> Cancelado
+                                </span>
+
+                                <span th:if="${pedido.status?.name() == 'ATRASADO'}"
+                                    class="status-badge status-late status-transition">
+                                    <i class="fas fa-clock me-1"></i> Atrasado
+                                </span>
+
+                                <span th:if="${pedido.status?.name() == 'NOVO'}"
+                                    class="status-badge status-new status-transition">
+                                    <i class="fas fa-star me-1"></i> Novo
+                                </span>
+                            </td>
+
+                            <!-- Coluna de Ações -->
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary btn-action" th:attr="data-id=${pedido.id}"
+                                    data-bs-toggle="modal" data-bs-target="#actionModal">
+                                    <i class="fas fa-cog me-1"></i> Gerenciar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -190,8 +184,102 @@
         </nav>
     </div>
 
+    <!-- Modal de Ações -->
+    <div class="modal fade action-modal" id="actionModal" tabindex="-1" aria-labelledby="actionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header action-header">
+                    <h5 class="modal-title" id="actionModalLabel">
+                        <i class="fas fa-pizza-slice me-2"></i>
+                        Gerenciar Pedido #<span id="modalPedidoId"></span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card order-details-card mb-4">
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        <i class="fas fa-user me-2"></i> Informações do Cliente
+                                    </h6>
+                                    <p class="mb-1"><strong>Nome:</strong> <span id="modalClienteNome"></span></p>
+                                    <p class="mb-1"><strong>Telefone:</strong> <span id="modalClienteTelefone"></span>
+                                    </p>
+                                    <p class="mb-1"><strong>Endereço:</strong> <span id="modalClienteEndereco"></span>
+                                    </p>
+                                    <p class="mb-0"><strong>Referência:</strong> <span
+                                            id="modalClienteReferencia"></span></p>
+                                </div>
+                            </div>
+
+                            <div class="card order-details-card">
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        <i class="fas fa-money-bill-wave me-2"></i> Informações de Pagamento
+                                    </h6>
+                                    <p class="mb-1"><strong>Método:</strong> <span id="modalPagamentoMetodo"></span></p>
+                                    <p class="mb-1"><strong>Valor Total:</strong> <span id="modalPagamentoTotal"></span>
+                                    </p>
+                                    <p class="mb-0"><strong>Troco para:</strong> <span id="modalPagamentoTroco"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card order-details-card">
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        <i class="fas fa-list me-2"></i> Itens do Pedido
+                                    </h6>
+                                    <div id="modalItensPedido" class="mb-3"></div>
+
+                                    <div class="progress-container">
+                                        <div class="progress-bar" id="statusProgressBar" style="width: 0%"></div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span class="badge bg-secondary status-badge">Recebido</span>
+                                        <span class="badge bg-primary status-badge">Processando</span>
+                                        <span class="badge bg-warning status-badge">Enviado</span>
+                                        <span class="badge bg-success status-badge">Entregue</span>
+                                    </div>
+
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-clock me-2"></i>
+                                        Pedido feito em: <span id="modalDataPedido"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="observacoesInput" class="form-label">
+                            <i class="fas fa-sticky-note me-2"></i> Observações/Notas:
+                        </label>
+                        <textarea class="form-control" id="observacoesInput" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex flex-wrap justify-content-center w-100" id="actionButtons">
+                        <!-- Botões de ação serão inseridos aqui via JavaScript -->
+                    </div>
+                    <button type="button" class="btn btn-danger" id="btnConcluir" data-bs-dismiss="modal">
+                        <i class="fas fa-check-circle me-2"></i> Concluir Gestão
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/assets/js/gestao-pedidos.js}"></script>
+
 </body>
 
 </html>

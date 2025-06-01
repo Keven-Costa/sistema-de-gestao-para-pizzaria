@@ -13,18 +13,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckoutDTO {
-    private String nome;
-    private String cep;
-    private String rua;
-    private String numero;
-    private String bairro;
-    private String telefone;
-    private String referencia;
-    private String observacoes;
-    private PagamentoDTO pagamento;
-    private BigDecimal preco_total;
+	private String nome;
+	private String cep;
+	private String rua;
+	private String numero;
+	private String bairro;
+	private String telefone;
+	private String referencia;
+	private String observacoes;
+	private PagamentoDTO pagamento;
+	private BigDecimal preco_total;
 
-
-    private List<ItemDTO> itens; // Enviar itens do pedido aqui
+	private List<ItemDTO> itens;
 
 }

@@ -1,3 +1,4 @@
+
 document.getElementById('editIngredientModal').addEventListener('show.bs.modal', function (event) {
     const button = event.relatedTarget;
 
@@ -17,7 +18,7 @@ document.getElementById('editIngredientModal').addEventListener('show.bs.modal',
     document.getElementById('editUnit').value = unidade;
 
     // Atualiza a action do formulário com o ID correto
-    document.getElementById('formEditarIngrediente').action = '/admin/novo-gestao-ingredientes/editar/' + id;
+    document.getElementById('formEditarIngrediente').action = '/admin/gestao-ingredientes/salvar';
 });
 
 // Opcional: Validação antes de enviar
@@ -34,6 +35,13 @@ document.getElementById('confirmarExclusaoModal').addEventListener('show.bs.moda
     const id = button.getAttribute('data-id');
     const nome = button.getAttribute('data-nome');
 
+    // Preenche o nome no texto do modal
     document.getElementById('nomeIngredienteExcluir').textContent = nome;
-    document.getElementById('btnConfirmarExclusao').href = '/admin/novo-gestao-ingredientes/excluir/' + id;
+    // Preenche o campo hidden do form
+    document.getElementById('ingredienteIdExcluir').value = id;
+});
+
+// Quando clicar em “Excluir”, envia o form via POST
+document.getElementById('btnConfirmarExclusao').addEventListener('click', function () {
+    document.getElementById('formExcluirIngrediente').submit();
 });

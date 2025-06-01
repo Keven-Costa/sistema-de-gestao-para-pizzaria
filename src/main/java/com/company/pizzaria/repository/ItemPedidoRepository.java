@@ -1,6 +1,5 @@
 package com.company.pizzaria.repository;
 
-
 import com.company.pizzaria.model.entity.ItemPedido;
 import com.company.pizzaria.model.entity.Pedido;
 
@@ -12,6 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
 	List<ItemPedido> findByPedido(Pedido pedido);
-    
-}
 
+}

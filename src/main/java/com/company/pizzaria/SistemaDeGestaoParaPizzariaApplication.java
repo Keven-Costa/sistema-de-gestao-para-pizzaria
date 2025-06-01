@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 
 
-@SpringBootApplication
+
 @Configuration
 @EnableAutoConfiguration
 
+@SpringBootApplication
 public class SistemaDeGestaoParaPizzariaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SistemaDeGestaoParaPizzariaApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(SistemaDeGestaoParaPizzariaApplication.class, args);
+    }
 }

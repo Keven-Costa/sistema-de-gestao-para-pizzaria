@@ -10,11 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PedidoDTO {
-    private String codigo;        // Pode ser o id ou outro código
-    private String sabores;       // String que mostra os sabores da pizza (ex: "Calabresa, Margherita")
-    private String statusCss;     // Classe CSS para status (ex: "status-preparo", "status-entregue")
-    private String statusTexto;   // Texto do status (ex: "Em preparo", "Entregue")
-    
-    // getters e setters
+	private String codigo;
+	private String sabores;
+	private String statusCss;
+	private String statusTexto;
 }
-

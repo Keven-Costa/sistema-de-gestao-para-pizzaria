@@ -67,3 +67,27 @@
 .search-box {
     max-width: 400px;
 }
+
+/* Estilização para os botões de ação */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Espaçamento entre botões */
+form[action*="invalidar"], 
+form[action*="excluir"] {
+    margin-right: 5px;
+    display: inline-block;
+}
+
+/* Destaque para botão de exclusão */
+.btn-sm.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-sm.btn-danger:hover {
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+}

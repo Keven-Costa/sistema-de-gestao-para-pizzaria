@@ -1,352 +1,292 @@
 
+// =============================================
+// Variáveis Globais e Inicialização
+// =============================================
+let carrinho = JSON.parse(localStorage.getItem('carrinhoItens')) || [];
+let descontoCupom = 0;
 
-// Chamar atualizarCarrinho quando a página carregar para mostrar os itens existentes
-document.addEventListener('DOMContentLoaded', function () {
-    const carrinhoSalvo = localStorage.getItem('carrinhoItens');
-    if (carrinhoSalvo) {
-        carrinho = JSON.parse(carrinhoSalvo);
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    // Limpar carrinho ao iniciar novo pedido
+    carrinho = [];
+    localStorage.removeItem('carrinho');
+    localStorage.removeItem('carrinhoItens');
     atualizarCarrinho();
 });
 
-
-
-let carrinho = [];
-
-function pegarItensDoPedido() {
-
-    // Obter todos os itens do resumo
-    const resumoItens = document.getElementById('resumo-pedido').children;
-
-    // Verificar se há itens no resumo
-    if (resumoItens.length === 0) {
-        alert('Nenhum item no resumo para adicionar ao carrinho!');
-        return;
-    }
-
-    // Criar um objeto para armazenar os itens do carrinho
-    let carrinhoItens = JSON.parse(localStorage.getItem('carrinhoItens')) || [];
-
-    const tamanhoPizza = document.getElementById('resumoTamanhoPizza').textContent;
-    let valorPizza = document.getElementById('resumoValorPizza').textContent;
-    valorPizza = parseFloat(valorPizza.replace('R$', '').replace('+ R$', '').replace(',', '.').trim());
-
-    const bordaRecheada = document.getElementById('resumoAdcionalBordaRecheada').textContent;
-    let valorBorda = document.getElementById('resumoAdicionalValorBordaRecheada').textContent;
-    valorBorda = valorBorda.replace(/[^\d,.-]/g, '');
-    valorBorda = valorBorda.replace(',', '.');
-    valorBorda = parseFloat(valorBorda);
-
-    const molhoExtra = document.getElementById('resumoAdcionalMolhoExtra').textContent;
-    let valorMolho = document.getElementById('resumoAdicionalValorMolhoExtra').textContent;
-    valorMolho = valorMolho.replace(/[^\d,.-]/g, '');
-    valorMolho = valorMolho.replace(',', '.');
-    valorMolho = parseFloat(valorMolho);
-
-    const cocaCola = document.getElementById('resumoAdcionalCocaCola').textContent;
-    let valorCoca = document.getElementById('resumoAdicionalValorCocaCola').textContent;
-    valorCoca = valorCoca.replace(/[^\d,.-]/g, '');
-    valorCoca = valorCoca.replace(',', '.');
-    valorCoca = parseFloat(valorCoca);
-
-    // Criar objeto do item principal (pizza)
-    if (tamanhoPizza && valorPizza) {
-        adicionarAoCarrinho(tamanhoPizza, valorPizza);
-    }
-
-    // Adicionar borda recheada se existir
-    if (bordaRecheada && valorBorda) {
-        adicionarAoCarrinho(bordaRecheada, valorBorda);
-    }
-
-    // Adicionar molho extra se existir
-    if (molhoExtra && valorMolho) {
-        adicionarAoCarrinho(molhoExtra, valorMolho);
-    }
-
-    // Adicionar Coca-Cola se existir
-    if (cocaCola && valorCoca) {
-        adicionarAoCarrinho(cocaCola, valorCoca);
-    }
-
-}
-
+// =============================================
+// Funções do Carrinho
+// =============================================
 function adicionarAoCarrinho(nome, preco) {
-    // Verifica se o item já está no carrinho
     const itemExistente = carrinho.find(item => item.nome === nome);
-
     if (itemExistente) {
-        // Se já existe, aumenta a quantidade
         itemExistente.quantidade++;
     } else {
-        // Se não existe, adiciona novo item
-        carrinho.push({
-            nome: nome,
-            preco: preco,
-            quantidade: 1
-        });
+        carrinho.push({ nome, preco: Number(preco), quantidade: 1 });
     }
-
-    atualizarCarrinho();
-    localStorage.setItem('carrinhoItens', JSON.stringify(carrinho));
+    salvarAtualizarCarrinho();
 }
 
 function removerDoCarrinho(nome) {
-    // Encontra o índice do item no carrinho
     const index = carrinho.findIndex(item => item.nome === nome);
-
     if (index !== -1) {
         if (carrinho[index].quantidade > 1) {
-            // Se tiver mais de 1, diminui a quantidade
             carrinho[index].quantidade--;
         } else {
-            // Se tiver apenas 1, remove o item
             carrinho.splice(index, 1);
         }
     }
+    salvarAtualizarCarrinho();
+}
 
-    atualizarCarrinho();
+function salvarAtualizarCarrinho() {
     localStorage.setItem('carrinhoItens', JSON.stringify(carrinho));
+    atualizarCarrinho();
 }
 
 function atualizarCarrinho() {
     const itensCarrinho = document.getElementById('itens-carrinho');
     const totalCarrinho = document.getElementById('total-carrinho');
-
-    // Limpa o conteúdo atual
-    itensCarrinho.innerHTML = '';
-
-    if (carrinho.length === 0) {
-        itensCarrinho.innerHTML = '<p>Carrinho vazio</p>';
-        totalCarrinho.textContent = 'Total: R$ 0,00';
-        return;
-    }
-
     let total = 0;
-
-    // Adiciona cada item ao carrinho
+    itensCarrinho.innerHTML = carrinho.length === 0 ? '<p>Carrinho vazio</p>' : '';
     carrinho.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'item-carrinho';
-
         const subtotal = item.preco * item.quantidade;
         total += subtotal;
-
+        const itemElement = document.createElement('div');
+        itemElement.className = 'item-carrinho';
         itemElement.innerHTML = `
-            <span>${item.nome} (${item.quantidade}x) - R$ ${subtotal.toFixed(2)}</span>
-            <p>${item.preco}</p>
-            <div>
-                <button class="btn btn-sm btn-outline-danger px-2 py-0" onclick="removerDoCarrinho('${item.nome}')">
-                    <i class="fas fa-minus"></i>
-                </button>
-            
-                <button class="btn btn-sm btn-outline-danger px-2 py-0" onclick="adicionarAoCarrinho('${item.nome}', '${item.preco}')">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-                                                                        
-        `;
-
+                <span>${item.nome} (${item.quantidade}x) - R$ ${subtotal.toFixed(2)}</span>
+                <div>
+                    <button class="btn btn-sm btn-outline-danger px-2 py-0" 
+                            onclick="removerDoCarrinho('${item.nome.replace(/'/g, "\\'")}')">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success px-2 py-0" 
+                            onclick="adicionarAoCarrinho('${item.nome.replace(/'/g, "\\'")}', ${item.preco})">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            `;
         itensCarrinho.appendChild(itemElement);
-
-        const itemHtml = document.getElementById('quantidadeItens')
-        const quantidadeItens = document.querySelectorAll('#itens-carrinho .item-carrinho').length;
-
-        itemHtml.innerHTML = `
-
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning" >
-                           '${quantidadeItens}'
-        </span>`
     });
-
-    // Atualiza o total
     totalCarrinho.textContent = `R$ ${total.toFixed(2)}`;
+    atualizarContadorItens();
 }
 
+function atualizarContadorItens() {
+    const itemHtml = document.getElementById('quantidadeItens');
+    if (itemHtml) {
+        const totalItens = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+        itemHtml.innerHTML = `
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                    ${totalItens}
+                </span>
+            `;
+    }
+}
+
+// =============================================
+// Funções do Pedido
+// =============================================
 function adicionarAoPedido() {
-    // Pega o label clicado
-    const labelClicado = event.currentTarget;
+    const sizeInput = document.querySelector('input[name="size"]:checked');
+    const tamanho = sizeInput.getAttribute("data-size");
+    const preco = parsearMoeda(sizeInput.getAttribute("data-price"));
 
-    // Extrai o nome (texto antes do <br>)
-    const tamanhoPizza = labelClicado.childNodes[0].textContent.trim(); // "Broto", "Média", "Grande"
-    const valorPizza = labelClicado.querySelector("small").textContent;
+    const nomePizza = document.getElementById("nomePizza").textContent.trim();
 
-
-
-    //const valorNumerico = parseFloat(valorTexto.replace("R$", "").replace(",", ".")); 
-    // Atualiza o resumo do pedido
-    document.getElementById("resumoTamanhoPizza").textContent = `1 Pizza ${tamanhoPizza}`;
-    document.getElementById("resumoValorPizza").textContent = valorPizza;
+    document.getElementById("resumoTamanhoPizza").textContent = `${nomePizza} - ${tamanho}`;
+    document.getElementById("resumoValorPizza").textContent = `R$ ${preco.toFixed(2).replace('.', ',')}`;
     calcularTotal();
 }
 
-function handleStuffedCrust(checkbox) {
-    // Pega o elemento <label> pelo ID
-    const labelProduto = document.getElementById('bordaRecheada');
 
-    // Extrai o nome do produto (texto direto do label, ignorando o <span>)
-    const nomeProduto = labelProduto.childNodes[0].nodeValue.trim(); // "Coca-Cola 2L"
-
-    // Pega o valor do <span> dentro do label
-    const valorSpan = document.getElementById('valorBordaRecheada');
-    const valorTexto = valorSpan.textContent.trim();
-
-
+function atualizarResumoPedido(checkbox, elementoResumoNome, elementoResumoValor, elementoLabelId, elementoValorId) {
+    const labelProduto = document.getElementById(elementoLabelId);
+    const nomeProduto = labelProduto.childNodes[0].nodeValue.trim();
+    const valorTexto = document.getElementById(elementoValorId).textContent.trim();
     if (checkbox.checked) {
-        document.getElementById("resumoAdcionalBordaRecheada").textContent = nomeProduto;
-        document.getElementById("resumoAdicionalValorBordaRecheada").textContent = valorTexto;
+        document.getElementById(elementoResumoNome).textContent = nomeProduto;
+        document.getElementById(elementoResumoValor).textContent = valorTexto;
     } else {
-        document.getElementById("resumoAdcionalBordaRecheada").textContent = "";
-        document.getElementById("resumoAdicionalValorBordaRecheada").textContent = "";
+        document.getElementById(elementoResumoNome).textContent = "";
+        document.getElementById(elementoResumoValor).textContent = "";
     }
     calcularTotal();
 }
 
-function handleExtraSauce(checkbox) {
-    // Pega o elemento <label> pelo ID
-    const labelProduto = document.getElementById('molhoExtra');
-
-    // Extrai o nome do produto (texto direto do label, ignorando o <span>)
-    const nomeProduto = labelProduto.childNodes[0].nodeValue.trim(); // "Coca-Cola 2L"
-
-    // Pega o valor do <span> dentro do label
-    const valorSpan = document.getElementById('valorMolhoExtra');
-    const valorTexto = valorSpan.textContent.trim(); // "+ R$ 12,00"
-
-
-    if (checkbox.checked) {
-        document.getElementById("resumoAdcionalMolhoExtra").textContent = nomeProduto;
-        document.getElementById("resumoAdicionalValorMolhoExtra").textContent = valorTexto;
-    } else {
-        document.getElementById("resumoAdcionalMolhoExtra").textContent = "";
-        document.getElementById("resumoAdicionalValorMolhoExtra").textContent = "";
-    }
-    calcularTotal();
+function atualizarBordaRecheada(checkbox) {
+    atualizarResumoPedido(checkbox,
+        'resumoAdcionalBordaRecheada',
+        'resumoAdicionalValorBordaRecheada',
+        'bordaRecheada',
+        'valorBordaRecheada');
 }
 
-function handleCoke(checkbox) {
-    // Pega o elemento <label> pelo ID
-    const labelProduto = document.getElementById('CocaCola');
-
-    // Extrai o nome do produto (texto direto do label, ignorando o <span>)
-    const nomeProduto = labelProduto.childNodes[0].nodeValue.trim(); // "Coca-Cola 2L"
-
-    // Pega o valor do <span> dentro do label
-    const valorSpan = document.getElementById('valorCocaCola');
-    const valorTexto = valorSpan.textContent.trim(); // "+ R$ 12,00"
-
-
-    if (checkbox.checked) {
-        document.getElementById("resumoAdcionalCocaCola").textContent = nomeProduto;
-        document.getElementById("resumoAdicionalValorCocaCola").textContent = valorTexto;
-    } else {
-        document.getElementById("resumoAdcionalCocaCola").textContent = "";
-        document.getElementById("resumoAdicionalValorCocaCola").textContent = "";
-    }
-    calcularTotal();
-
+function atualizarMolhoExtra(checkbox) {
+    atualizarResumoPedido(checkbox,
+        'resumoAdcionalMolhoExtra',
+        'resumoAdicionalValorMolhoExtra',
+        'molhoExtra',
+        'valorMolhoExtra');
 }
+
+function atualizarCocaCola(checkbox) {
+    atualizarResumoPedido(checkbox,
+        'resumoAdcionalCocaCola',
+        'resumoAdicionalValorCocaCola',
+        'CocaCola',
+        'valorCocaCola');
+}
+
+// =============================================
+// Cálculo de Preços
+// =============================================
+function parsearMoeda(value) {
+    const parsed = parseFloat(
+        value.replace('R$', '')
+            .replace('+ R$', '')
+            .replace(/[^\d,.-]/g, '')
+            .replace(',', '.')
+    );
+    return isNaN(parsed) ? 0 : parsed;
+}
+
 
 function calcularTotal() {
-    // Seleciona todos os elementos de valor dentro da lista
-    const elementosValor = document.querySelectorAll('#resumo-pedido span[id^="resumoAdicionalValor"], #resumoValorPizza');
+    const elementosValor = document.querySelectorAll(`
+        #resumoValorPizza,
+        #resumoAdicionalValorBordaRecheada,
+        #resumoAdicionalValorMolhoExtra,
+        #resumoAdicionalValorCocaCola
+    `);
 
-    let total = 0;
+    let total = [...elementosValor].reduce((sum, el) => {
+        return el.textContent ? sum + parsearMoeda(el.textContent) : sum;
+    }, 0);
 
-    elementosValor.forEach((elemento) => {
-        if (elemento.textContent.trim() !== '') {
-            // Extrai o valor numérico (ex: "R$ 12,00" → 12.00)
-            const valorTexto = elemento.textContent.replace('+ R$', '').replace('R$', '').replace(',', '.').trim();
-            const valorNumerico = parseFloat(valorTexto);
+    // Aplicar desconto do cupom se existir
+    total = Math.max(0, total - descontoCupom);
 
-            if (!isNaN(valorNumerico)) {
-                total += valorNumerico;
-            }
-        }
-    });
-
-    // Atualiza o elemento de total no HTML
-    const elementoTotal = document.getElementById('resumo-total');
-    elementoTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-
-    return total;
+    const textoFinal = total > 0 ? `R$ ${total.toFixed(2).replace('.', ',')}` : "R$ 0,00";
+    document.getElementById('resumo-total').textContent = textoFinal;
+    document.getElementById('total-carrinho').textContent = textoFinal;
+    
+    return total; // Retornamos o total para uso em outras funções
 }
 
 
-// Seleciona os elementos
+// =============================================
+// Enviar Itens para o Carrinho
+// =============================================
+function pegarItensDoPedido() {
+    // Pizza principal
+    const nomePizza = document.getElementById("nomePizza").textContent.trim();
+    const sizeInput = document.querySelector('input[name="size"]:checked');
+
+    const tamanho = sizeInput.getAttribute("data-size");
+    const preco = parsearMoeda(sizeInput.getAttribute("data-price"));
+
+    adicionarAoCarrinho(`${nomePizza} - ${tamanho}`, preco);
+
+    // Adicionais
+    const adicionais = [
+        { cb: 'stuffed-crust', label: 'bordaRecheada', valor: 'valorBordaRecheada' },
+        { cb: 'extra-sauce', label: 'molhoExtra', valor: 'valorMolhoExtra' },
+        { cb: 'coke', label: 'CocaCola', valor: 'valorCocaCola' }
+    ];
+
+    adicionais.forEach(item => {
+        const checkbox = document.getElementById(item.cb);
+        if (checkbox.checked) {
+            const nome = document.getElementById(item.label).childNodes[0].nodeValue.trim();
+            const valor = parsearMoeda(document.getElementById(item.valor).textContent);
+            adicionarAoCarrinho(nome, valor);
+        }
+    });
+}
+
+
+// =============================================
+// Notificações e Checkout
+// =============================================
 const addToCartBtn = document.getElementById('botaoAdicionarAoCarrinho');
 const cartNotification = document.getElementById('cartNotification');
 const closeNotification = document.getElementById('closeNotification');
 
-// Mostra a notificação quando clica no botão
-addToCartBtn.addEventListener('click', () => {
-    cartNotification.classList.add('show');
-
-    // Esconde automaticamente após 3 segundos
-    setTimeout(() => {
-        cartNotification.classList.remove('show');
-    }, 3000);
-
-});
-
-// Fecha a notificação quando clica no botão de fechar
-closeNotification.addEventListener('click', () => {
-    cartNotification.classList.remove('show');
-});
-
-
-
-
-
-// function pegarItensDoCarrinho() {
-//     const itens = [];
-//     const elementos = document.querySelectorAll("#itens-carrinho .item-carrinho");
-
-//     elementos.forEach((item) => {
-//         const texto = item.querySelector("span").textContent;
-//         const match = texto.match(/^(.*?) \((\d+)x\) \- R\$ (\d+\.?\d*)/);
-
-//         if (match) {
-//             itens.push({
-//                 nome: match[1].trim(),
-//                 quantidade: parseInt(match[2]),
-//                 preco: parseFloat(match[3])
-//             });
-//             console.log(item)
-//         }
-//     });
-
-//     return itens;
-// }
-
-function pegarItensDoCarrinho() {
-    const itens = [];
-    const elementos = document.querySelectorAll("#itens-carrinho .item-carrinho");
-
-    elementos.forEach((item) => {
-        const texto = item.querySelector("span").textContent;
-        const precoNormalTexto = item.querySelector("p").textContent;
-
-        const match = texto.match(/^(.*?) \((\d+)x\) - R\$ (\d+\.?\d*)/);
-
-        if (match) {
-            itens.push({
-                nome: match[1].trim(),
-                quantidade: parseInt(match[2]),
-                precoTotal: parseFloat(match[3]),  // Preço total que vem no span
-                precoUnitario: parseFloat(precoNormalTexto)  // Preço normal que vem no p
-            });
-            console.log(item);
-        }
+if (addToCartBtn && cartNotification && closeNotification) {
+    addToCartBtn.addEventListener('click', () => {
+        cartNotification.classList.add('show');
+        setTimeout(() => cartNotification.classList.remove('show'), 3000);
     });
 
-    return itens;
+    closeNotification.addEventListener('click', () => {
+        cartNotification.classList.remove('show');
+    });
 }
 
-
 function irParaCheckout() {
-    const itens = pegarItensDoCarrinho();
-    console.log(itens)
-    localStorage.setItem("carrinho", JSON.stringify(itens));
+    // Salvar carrinho e desconto
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    localStorage.setItem("descontoCupom", descontoCupom.toString());
     window.location.href = "checkout";
+}
+
+// =============================================
+// Associa os eventos de mudança de tamanho
+// =============================================
+document.querySelectorAll('input[name="size"]').forEach(radio => {
+    radio.addEventListener('change', adicionarAoPedido);
+});
+
+// Também chama a função inicialmente para preencher o valor padrão
+document.addEventListener('DOMContentLoaded', () => {
+    adicionarAoPedido();
+});
+
+
+
+
+async function aplicarCupom() {
+    const codigo = document.getElementById("input-cupom").value;
+
+    if (!codigo) {
+        alert("Digite um código de cupom.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/cupom/${codigo}`);
+        if (!response.ok) throw new Error("Cupom inválido ou expirado");
+
+        const data = await response.json();
+        const totalSemDesconto = calcularTotalSemDesconto(); // Nova função para calcular sem desconto
+
+        if (data.tipo === "fixo") {
+            descontoCupom = data.valor;
+        } else if (data.tipo === "porcentagem") {
+            descontoCupom = totalSemDesconto * (data.valor / 100);
+        }
+
+        calcularTotal(); // Atualiza a exibição com o desconto
+        alert(`Cupom aplicado com sucesso! Desconto: R$ ${descontoCupom.toFixed(2)}`);
+
+    } catch (error) {
+        alert("Cupom inválido ou expirado.");
+        descontoCupom = 0;
+        calcularTotal(); // Reseta o desconto
+    }
+}
+
+// Nova função para calcular o total sem considerar desconto
+function calcularTotalSemDesconto() {
+    const elementosValor = document.querySelectorAll(`
+        #resumoValorPizza,
+        #resumoAdicionalValorBordaRecheada,
+        #resumoAdicionalValorMolhoExtra,
+        #resumoAdicionalValorCocaCola
+    `);
+
+    return [...elementosValor].reduce((sum, el) => {
+        return el.textContent ? sum + parsearMoeda(el.textContent) : sum;
+    }, 0);
 }

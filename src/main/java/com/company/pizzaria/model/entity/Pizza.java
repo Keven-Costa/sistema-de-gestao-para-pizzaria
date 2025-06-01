@@ -14,10 +14,10 @@ import lombok.Setter;
 @Table(name = "pizzas")
 public class Pizza extends Produto {
 
-    @Column(length = 50)
-    private String tipo;
+	@Column(length = 50)
+	private String tipo;
 
-    @Column(length = 255)
-    private String imagem;
+	@Column(length = 1000)
+	private String imagem;
 
 }

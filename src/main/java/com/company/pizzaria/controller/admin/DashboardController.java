@@ -2,6 +2,7 @@ package com.company.pizzaria.controller.admin;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
@@ -19,49 +20,44 @@ import com.company.pizzaria.service.PedidoService;
 @RequestMapping("/admin")
 public class DashboardController {
 
-    private final PedidoService pedidoService;
+	private final PedidoService pedidoService;
 
-    // Injeção via construtor
-    public DashboardController(PedidoService pedidoService) {
-        this.pedidoService = pedidoService;
-    }
+	public DashboardController(PedidoService pedidoService) {
+		this.pedidoService = pedidoService;
+	}
 
-    @GetMapping("/dashboard")
-    public String exibirPaginaDashboard(Model model) {
-        int pedidosHoje = pedidoService.contarPedidosHoje();
-        BigDecimal valorTotal = pedidoService.valorTotalPedidosHoje();
-        List<Pedido> ultimosPedidos = pedidoService.ultimosPedidos();
+	@GetMapping("/dashboard")
+	public String exibirPaginaDashboard(Model model) {
+		int pedidosHoje = pedidoService.contarPedidosHoje();
+		BigDecimal valorTotal = pedidoService.valorTotalPedidosHoje();
+		List<Pedido> ultimosPedidos = pedidoService.ultimosPedidos();
 
-        // Converter para DTO se necessário
-        List<PedidoDTO> ultimosPedidosDTO = ultimosPedidos.stream().map(p -> {
-            PedidoDTO dto = new PedidoDTO();
-            dto.setCodigo("#" + p.getId());
-            dto.setSabores(
-                p.getItens().stream()
-                  .map(ItemPedido::getNome)
-                  .collect(Collectors.joining(", "))
-            );
-            dto.setStatusCss(obterStatusCss(p.getStatus()));
-            dto.setStatusTexto(p.getStatus().getDescricao());
-            return dto;
-        }).toList();
+		List<PedidoDTO> ultimosPedidosDTO = ultimosPedidos.stream().map(p -> {
+			PedidoDTO dto = new PedidoDTO();
+			dto.setCodigo("#" + p.getId());
+			dto.setSabores(p.getItens().stream().map(ItemPedido::getNome).collect(Collectors.joining(", ")));
+			dto.setStatusCss(obterStatusCss(p.getStatus()));
+			dto.setStatusTexto(p.getStatus().getDescricao());
+			return dto;
+		}).toList();
 
-        model.addAttribute("pedidosHoje", pedidosHoje);
-        model.addAttribute("valorTotal", valorTotal);
-        model.addAttribute("ultimosPedidos", ultimosPedidosDTO);
+		Map<String, Long> saboresMaisVendidos = pedidoService.obterSaboresMaisVendidos();
 
-        // TODO: adicionar dados do gráfico de sabores mais vendidos
+		model.addAttribute("pedidosHoje", pedidosHoje);
+		model.addAttribute("valorTotal", valorTotal);
+		model.addAttribute("ultimosPedidos", ultimosPedidosDTO);
+		model.addAttribute("saboresMaisVendidos", saboresMaisVendidos);
 
-        return "admin/dashboard";
-    }
+		return "admin/dashboard";
+	}
 
-    private String obterStatusCss(StatusPedidos status) {
-        return switch (status) {
-            case PROCESSANDO -> "status-preparo";
-            case ENTREGUE -> "status-entregue";
-            case ENVIADO -> "status-enviado";
-            case CANCELADO -> "status-cancelado";
-            default -> "status-pendente";
-        };
-    }
+	private String obterStatusCss(StatusPedidos status) {
+		return switch (status) {
+		case PROCESSANDO -> "status-preparo";
+		case ENTREGUE -> "status-entregue";
+		case ENVIADO -> "status-enviado";
+		case CANCELADO -> "status-cancelado";
+		default -> "status-pendente";
+		};
+	}
 }

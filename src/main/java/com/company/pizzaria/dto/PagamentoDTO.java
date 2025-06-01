@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PagamentoDTO {
-    private String tipo;
-    private Double trocoPara;
+	private String tipo;
+	private Double trocoPara;
 }
-

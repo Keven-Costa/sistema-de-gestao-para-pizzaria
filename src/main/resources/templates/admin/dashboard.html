@@ -11,10 +11,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/dashboard.css}" />
 </head>
 
 <body>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container">
@@ -31,23 +33,28 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/gestao-pedidos}">
+                        <a class="nav-link" th:href="@{/admin/gestao-pedidos}">
                             <i class="fas fa-list me-1"></i>Pedidos
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/novo-gestao-ingredientes}">
+                        <a class="nav-link" th:href="@{/admin/gestao-ingredientes}">
                             <i class="fas fa-boxes me-1"></i>Estoque
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/painel-promocoes}">
+                        <a class="nav-link" th:href="@{/admin/painel-promocoes}">
                             <i class="fas fa-tag me-1"></i>Promoções
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">
+                        <a class="nav-link" th:href="@{/admin/login}">
                             <i class="fas fa-sign-out-alt me-1"></i>Sair
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/gerenciar-pizzas}">
+                            <i class="fas fa-list me-1"></i>Gerenciar Pizzas
                         </a>
                     </li>
                 </ul>
@@ -90,7 +97,9 @@
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="chart-container p-3 bg-light rounded">
                     <h5 class="mb-3"><i class="fas fa-chart-pie me-2"></i>Sabores Mais Vendidos</h5>
-                    <canvas id="flavorsChart"></canvas>
+<canvas id="flavorsChart" 
+        th:data-sabores="${#strings.listJoin(saboresMaisVendidos.keySet(), ',')}"
+        th:data-quantidades="${#strings.listJoin(saboresMaisVendidos.values(), ',')}"></canvas>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -111,12 +120,11 @@
                             </thead>
                             <tbody>
                                 <tr th:each="pedido : ${ultimosPedidos}">
-                                    <td th:text="${pedido.codigo}">#4567</td>
-                                    <td th:text="${pedido.sabores}">Calabresa, Margherita</td>
+                                    <td th:text="${pedido.codigo}">código da pizza...</td>
+                                    <td th:text="${pedido.sabores}">Nome da pizza...</td>
                                     <td>
-                                        <span class="status-badge"
-                                            th:classappend="' ' + ${pedido.statusCss}"
-                                            th:text="${pedido.statusTexto}">Em preparo</span>
+                                        <span class="status-badge" th:classappend="' ' + ${pedido.statusCss}"
+                                            th:text="${pedido.statusTexto}">status da pizza...</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -127,9 +135,9 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/assets/js/dashboard.js}"></script>
+
 </body>
 
 </html>

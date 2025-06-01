@@ -12,22 +12,22 @@ import com.company.pizzaria.repository.ClienteRepository;
 @Service
 public class ClienteService {
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
 
-    public Cliente salvar(Cliente cliente) {
-        return clienteRepository.save(cliente);
-    }
+	public Cliente salvar(Cliente cliente) {
+		return clienteRepository.save(cliente);
+	}
 
-    public List<Cliente> listarTodos() {
-        return clienteRepository.findAll();
-    }
+	public List<Cliente> listarTodos() {
+		return clienteRepository.findAll();
+	}
 
-    public Optional<Cliente> buscarPorId(Long id) {
-        return clienteRepository.findById(id);
-    }
+	public Optional<Cliente> buscarPorId(Long id) {
+		return clienteRepository.findById(id);
+	}
 
-    public void deletar(Long id) {
-        clienteRepository.deleteById(id);
-    }
+	public void deletar(Long id) {
+		clienteRepository.deleteById(id);
+	}
 }

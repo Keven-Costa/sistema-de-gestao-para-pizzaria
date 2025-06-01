@@ -9,20 +9,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/rastreamento-pedido.css}">
 </head>
 
 <body>
+
     <!-- Cabeçalho -->
     <header class="bg-danger py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="https://via.placeholder.com/50x50" alt="Logo da Pizzaria" class="me-2">
+                    <img src="https://via.placeholder.com/50x50?text=PIZZA" alt="Logo da Pizzaria" class="me-2 rounded">
                     <h1 class="text-white m-0">Acompanhe seu Pedido</h1>
                 </div>
-                <a href="#" class="btn btn-light">
+                <a href="/" class="btn btn-light">
                     <i class="fas fa-chevron-left me-2"></i>Voltar
                 </a>
             </div>
@@ -33,44 +34,47 @@
     <div class="container my-5">
         <!-- Número do Pedido -->
         <div class="text-center mb-4">
-            <h3>Pedido #4567</h3>
-            <p class="text-muted">Status atual: <span class="text-danger fw-bold">Em preparo</span></p>
+            <h3 id="pedidoNumber">Pedido #</h3>
+            <p class="text-muted">Status atual: <span id="pedidoStatus" class="text-danger fw-bold">Carregando...</span>
+            </p>
         </div>
 
         <!-- Barra de Progresso -->
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-bar-fill"></div>
+                <div class="progress-bar-fill" id="progressBarFill"></div>
             </div>
 
-            <div class="progress-step completed">
+            <div class="progress-step" id="stepRecebido">
                 <div class="step-icon">
                     <i class="fas fa-check"></i>
                 </div>
-                <div class="step-label fw-bold">Recebido</div>
-                <small class="text-muted">15:20</small>
+                <div class="step-label">Recebido</div>
+                <small class="text-muted" id="stepRecebidoTime">-</small>
             </div>
 
-            <div class="progress-step active">
+            <div class="progress-step" id="stepEmPreparo">
                 <div class="step-icon">
                     <i class="fas fa-utensils"></i>
                 </div>
-                <div class="step-label fw-bold">Em preparo</div>
-                <small class="text-muted">15:25</small>
+                <div class="step-label">Em preparo</div>
+                <small class="text-muted" id="stepEmPreparoTime">-</small>
             </div>
 
-            <div class="progress-step">
+            <div class="progress-step" id="stepSaiuEntrega">
                 <div class="step-icon">
                     <i class="fas fa-motorcycle"></i>
                 </div>
                 <div class="step-label">Saiu para entrega</div>
+                <small class="text-muted" id="stepSaiuEntregaTime">-</small>
             </div>
 
-            <div class="progress-step">
+            <div class="progress-step" id="stepEntregue">
                 <div class="step-icon">
                     <i class="fas fa-home"></i>
                 </div>
                 <div class="step-label">Entregue</div>
+                <small class="text-muted" id="stepEntregueTime">-</small>
             </div>
 
             <div style="clear: both;"></div>
@@ -78,21 +82,21 @@
 
         <!-- Tempo Estimado -->
         <div class="alert alert-danger text-center mb-4">
-            <i class="fas fa-clock me-2"></i> Previsão de entrega: <strong>16:10 - 16:30</strong>
+            <i class="fas fa-clock me-2"></i> Previsão de entrega: <strong id="previsaoEntrega">Carregando...</strong>
         </div>
 
         <!-- Detalhes do Entregador (aparece quando o pedido sai para entrega) -->
         <div class="delivery-person text-center" id="deliveryPerson" style="display: none;">
             <h5 class="mb-3">Seu entregador</h5>
             <div class="d-flex align-items-center justify-content-center mb-3">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Entregador">
+                <img id="entregadorFoto" src="https://via.placeholder.com/60x60?text=ENTREGADOR" alt="Entregador">
                 <div class="text-start">
-                    <h6 class="m-0">João Silva</h6>
-                    <small class="text-muted">Placa: XYZ-1234</small>
+                    <h6 id="entregadorNome" class="m-0">Carlos Silva</h6>
+                    <small id="entregadorPlaca" class="text-muted">Moto: Honda CG 160 • Placa: ABC-1234</small>
                 </div>
             </div>
             <div class="alert alert-warning">
-                <i class="fas fa-motorcycle me-2"></i> Saiu para entrega às <strong>15:50</strong>
+                <i class="fas fa-motorcycle me-2"></i> Saiu para entrega às <strong id="saiuEntregaTime">-</strong>
             </div>
         </div>
 
@@ -102,42 +106,25 @@
                 <h5 class="m-0">Resumo do Pedido</h5>
             </div>
             <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>1x Pizza Grande Supreme</span>
-                        <span>R$ 59,90</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>1x Borda Recheada</span>
-                        <span>R$ 8,00</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>1x Coca-Cola 2L</span>
-                        <span>R$ 12,00</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Taxa de entrega</span>
-                        <span>R$ 5,00</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between fw-bold">
-                        <span>Total</span>
-                        <span>R$ 84,90</span>
-                    </li>
+                <ul class="list-group list-group-flush" id="resumoPedido">
+                    <!-- Itens serão inseridos via JavaScript -->
                 </ul>
+                <p class="text-center mt-3">
+                    Total: <strong id="total">R$ 0,00</strong>
+                </p>
             </div>
         </div>
     </div>
 
     <!-- Botão de Ajuda -->
-    <a href="https://wa.me/5511999999999?text=Preciso+de+ajuda+com+o+pedido+%234567"
-        class="btn btn-danger btn-lg help-button">
+    <a id="whatsappButton" href="#" class="btn btn-danger btn-lg help-button">
         <i class="fab fa-whatsapp me-2"></i>Preciso de ajuda
     </a>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script th:src="@{/assets/js/rastreamento-pedido.js}"></script>
+
 </body>
 
 </html>
