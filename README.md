@@ -3,7 +3,7 @@
 
 # Sistema de Gestão para Pizzaria 🍕
 
-![Status](https://img.shields.io/badge/status-completo-success) 
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow) 
 ![Tecnologias](https://img.shields.io/badge/tech-Java%20|%20Spring%20|%20MySQL%20|%20Thymeleaf-blue) 
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -24,8 +24,8 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 - [Funcionalidades Implementadas](#-funcionalidades-implementadas)
 - [Estrutura de Rotas](#-estrutura-de-rotas)
 - [Acesso Administrativo](#-acesso-administrativo)
-- [Pré-requisitos](#-pré-requisitos)
-- [Execução](#-execução)
+- [Pré-requisitos](#pré-requisitos)
+- [Execução](#execução)
 - [Diagramas](#-diagramas)
 - [Licença](#-licença)
 
@@ -94,7 +94,9 @@ Para acessar a área administrativa:
 | RAM disponível   | 4GB           | -                    |
 
 
-## Rodando a aplicação com Docker
+## Execução
+
+*Rodando a aplicação com Docker*
 
 ### 1. Clone o repositório
 
