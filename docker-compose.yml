@@ -5,26 +5,47 @@ services:
     build: .
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/gestao_pizzaria?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - pizzanet
+    restart: unless-stopped
 
   db:
     image: mysql:8.0
-    ports:
-      - "3306:3306"
+    env_file:
+      - .env
     environment:
-      MYSQL_ROOT_PASSWORD: 1123456
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: gestao_pizzaria
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    command: 
+      - --default-authentication-plugin=mysql_native_password
+      - --init-file=/docker-entrypoint-initdb.d/init.sql
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./mysql/initdb:/docker-entrypoint-initdb.d
+    networks:
+      - pizzanet
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p1123456"]
+      test: ["CMD-SHELL", "mysql -u ${DB_USERNAME} -p${DB_PASSWORD} -e 'SELECT 1'"]
       interval: 5s
       timeout: 10s
       retries: 10
 
 volumes:
   mysql_data:
+
+networks:
+  pizzanet:
+    driver: bridge

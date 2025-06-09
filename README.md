@@ -13,7 +13,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 - **Área Pública**: Para clientes montarem e acompanharem pedidos
 - **Área Administrativa**: Com autenticação para gestão do negócio
-- Stack: Java, Spring Boot, MySQL, Thymeleaf e Docker
+- **Stack**: Java, Spring Boot, MySQL, Thymeleaf e Docker
 
 
 *Observação: Projeto desenvolvido para fins de aprendizagem, algumas funcionalidades podem ser limitadas.*
@@ -80,8 +80,8 @@ Para acessar a área administrativa:
 1. Acesse: http://localhost:8080/admin/login
 2. Credenciais padrão:
 
-Usuário: admin  
-Senha: 123456
+- Usuário: ```admin```  
+- Senha: ```123456```
 
 
 
@@ -93,6 +93,7 @@ Senha: 123456
 | Docker Compose   | 1.29+         | `docker-compose -v`  |
 | RAM disponível   | 4GB           | -                    |
 
+
 ## Rodando a aplicação com Docker
 
 ### 1. Clone o repositório
@@ -100,20 +101,41 @@ Senha: 123456
 Primeiro, clone este repositório para a sua máquina:
 
 ```bash
-git clone https://github.com/seu-usuario/gestao-pizzaria.git
+git clone https://github.com/[seu-usuario]/gestao-pizzaria.git
 
 ```
+Navegue até a raiz do projeto
 ```bash
 cd gestao-pizzaria
 ```
 
-### 2. Construção e execução dos containers
-```bash
-docker-compose up --build
+### 2. Crie um arquivo .env
+Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+``` 
+DB_USERNAME=[nome_usuario_aplicacao]
+DB_PASSWORD=[senha_usuario_aplicacao]
+DB_ROOT_PASSWORD=[senha_root_mysql]
 ```
 
-### 3. Acessando a aplicação
+### 3. Verifique se o doker esta rodando
+Caso não esteja iniciado:
+
+- Linux: ```sudo systemctl start docker```
+
+- Windows/Mac: Inicie o Docker Desktop
+
+### 4. Construa e execute os containers
+
+```bash
+docker compose up --build
+```
+
+### 5. Acessando a aplicação
 Após a execução do comando acima, a aplicação estará rodando em http://localhost:8080.
+
+## Rodar a aplicação como desenvolvedor
+
+[acesse aqui](#)
 
 ## 📊 Diagramas
 → [Ver diagramas do projeto](#)
