@@ -20,7 +20,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 ## 📌 Índice
 
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Funcionalidades Implementadas](#-funcionalidades-implementadas)
 - [Estrutura de Rotas](#estrutura-de-rotas)
 - [Acesso Administrativo](#-acesso-administrativo)
@@ -29,7 +29,8 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 - [Diagramas](#-diagramas)
 - [Licença](#-licença)
 
-## 🛠️ Tecnologias Utilizadas
+## <a id="tecnologias-utilizadas"></a> 🛠️ Tecnologias Utilizadas
+
 
 | Camada         | Tecnologias                              |
 |----------------|------------------------------------------|
@@ -85,7 +86,7 @@ Para acessar a área administrativa:
 
 
 
-## ⚙️ Pré-requisitos
+## <a id="pre-requisitos"></a> ⚙️ Pré-requisitos
 
 | Componente       | Versão mínima | Como verificar       |
 |------------------|---------------|----------------------|
