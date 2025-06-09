@@ -20,8 +20,8 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 ## 📌 Índice
 
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Funcionalidades Implementadas](#-funcionalidades-implementadas)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Funcionalidades Implementadas](#funcionalidades-implementadas)
 - [Estrutura de Rotas](#-estrutura-de-rotas)
 - [Acesso Administrativo](#-acesso-administrativo)
 - [Pré-requisitos](#pré-requisitos)
