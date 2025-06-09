@@ -22,7 +22,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Funcionalidades Implementadas](#-funcionalidades-implementadas)
-- [Estrutura de Rotas](#-estrutura-de-rotas)
+- [Estrutura de Rotas](#estrutura-de-rotas)
 - [Acesso Administrativo](#-acesso-administrativo)
 - [Pré-requisitos](#pré-requisitos)
 - [Execução](#execução)
@@ -52,7 +52,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 - ✔️ Gerenciamento de cardápio
 - ✔️ Autenticação segura (Spring Security)
 
-## 🗺️ Estrutura de Rotas
+## <a id="estrutura-de-rotas"></a> 🗺️ Estrutura de Rotas
 
 ### Cliente (Acesso Livre)
 | Rota                          | Descrição                     |
