@@ -33,18 +33,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 ## 📷 Imagens do Projeto <a id="imagens-do-projeto"></a>
 
-<div style="display: flex; overflow-x: auto; gap: 10px; padding: 10px;">
-    <img src="imagens-do-projeto/tela1.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela1-2.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela2.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela3.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela4.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela5.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela6.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela8.png" style="height: 300px; border-radius: 8px;" />
-    <img src="imagens-do-projeto/tela7.png" style="height: 300px; border-radius: 8px;" />
-    
-</div>
+![Imagens do projeto](telas-projetos.gif)
 
 
 
