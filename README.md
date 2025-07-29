@@ -33,24 +33,24 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 ## 📷 Imagens do Projeto <a id="imagens-projeto"></a>
 
-| ![Tela 1](imagens-projeto/tela1.png) | ![Tela 2](imagens-projeto/tela1-2.png) |
+
+| <img src="imagens-projeto/tela1.png" width="300"> | <img src="imagens-projeto/tela1-2.png" width="300"> |
 |:---:|:---:|
 |                         Home      |
 
 
-| ![Tela 3](imagens-projeto/tela2.png) | ![Tela 4](imagens-projeto/tela4.png) |
+| <img src="imagens-projeto/tela2.png" width="300"> | <img src="imagens-projeto/tela4.png" width="300"> |
 |:---:|:---:|
-| Tela 3 | Tela 4 |
+| Montagem do pedido  | Informação do pedido  |
 
-| ![Tela 5](imagens-projeto/tela5.png) | ![Tela 6](imagens-projeto/tela6.png) |
+
+| <img src="imagens-projeto/tela5.png" width="300"> | <img src="imagens-projeto/tela6.png" width="300"> |
 |:---:|:---:|
-| Tela 5 | Tela 6 |
+| Acompanhamento do Pedido | Dashboard |
 
-
-| ![Tela 7](imagens-projeto/tela7.png) | ![Tela 8](imagens-projeto/tela8.png) |
+| <img src="imagens-projeto/tela7.png" width="300"> | <img src="imagens-projeto/tela8.png" width="300"> |
 |:---:|:---:|
-| Tela 7 | Tela 8 |
-
+| Gerenciar Cupons | Gerenciamento de pedido |
 
 
 
