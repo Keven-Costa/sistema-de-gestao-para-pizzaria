@@ -1,4 +1,4 @@
-# Ambiente de Desenvolvimento - Gestão de Pizzaria 🛠️ (Em desenvolvimento ⚠️)
+# Ambiente de Desenvolvimento - Gestão de Pizzaria 🛠️ 
 
 Este guia explica como configurar o projeto localmente para desenvolvimento e contribuição. (este guia não esta pronto ⚠️)
 

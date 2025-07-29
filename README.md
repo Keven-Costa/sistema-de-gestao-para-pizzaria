@@ -20,14 +20,33 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 ## 📌 Índice
 
+- [Imagens do Projeto](#tecnologias-utilizadas)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Funcionalidades Implementadas](#-funcionalidades-implementadas)
 - [Estrutura de Rotas](#estrutura-de-rotas)
 - [Acesso Administrativo](#-acesso-administrativo)
 - [Pré-requisitos](#pre-requisitos)
-- [Execução](#execução)
+- [Execução](#execucao)
 - [Diagramas](#-diagramas)
 - [Licença](#-licença)
+
+
+## 📷 Imagens do Projeto <a id="imagens-do-projeto"></a>
+
+<div style="display: flex; overflow-x: auto; gap: 10px; padding: 10px;">
+    <img src="imagens-do-projeto/tela1.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela1-2.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela2.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela3.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela4.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela5.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela6.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela8.png" style="height: 300px; border-radius: 8px;" />
+    <img src="imagens-do-projeto/tela7.png" style="height: 300px; border-radius: 8px;" />
+    
+</div>
+
+
 
 ## <a id="tecnologias-utilizadas"></a> 🛠️ Tecnologias Utilizadas
 
@@ -47,7 +66,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 - ✔️ Rastreamento do pedido
 
 ### Área Administrativa
-- ✔️ Dashboard com métricas
+- ✔️ Dashboard 
 - ✔️ Gestão de pedidos
 - ✔️ Gestão de estoque de ingredientes
 - ✔️ Gerenciamento de cardápio
@@ -92,10 +111,10 @@ Para acessar a área administrativa:
 |------------------|---------------|----------------------|
 | Docker           | 20.10+        | `docker --version`   |
 | Docker Compose   | 1.29+         | `docker-compose -v`  |
-| RAM disponível   | 4GB           | -                    |
 
 
-## Execução
+
+##   <a id="execucao"></a> ▶️ Execução
 
 *Rodando a aplicação com Docker*
 
@@ -113,12 +132,38 @@ cd gestao-pizzaria
 ```
 
 ### 2. Crie um arquivo .env
-Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
-``` 
-DB_USERNAME=[nome_usuario_aplicacao]
-DB_PASSWORD=[senha_usuario_aplicacao]
-DB_ROOT_PASSWORD=[senha_root_mysql]
+Crie um arquivo `.env` na raiz do projeto
+
+#### No Windows (CMD ou PowerShell):
+
+No CMD:
+
+```bash
+type nul > .env
 ```
+
+No PowerShell:
+
+```bash
+New-Item -Path .env -ItemType File
+```
+
+
+#### No Linux:
+
+```bash
+touch .env
+```
+
+Adicione as seguintes variáveis de ambiente com suas credenciais:
+
+``` 
+DB_USERNAME=usuario_projeto
+DB_PASSWORD=senha_projeto
+DB_ROOT_PASSWORD=senha_root_mysql
+```
+
+- Você pode substituir os valores **usuario_projeto**, **senha_projeto**, **senha_root_mysql** pelas suas credenciais reais.
 
 ### 3. Verifique se o doker esta rodando
 Caso não esteja iniciado:
@@ -138,7 +183,8 @@ Após a execução do comando acima, a aplicação estará rodando em http://loc
 
 ## Rodar a aplicação como desenvolvedor
 
-[acesse aqui](#)
+[Acesse aqui](#https://github.com/Keven-Costa/sistema-de-gestao-para-pizzaria/blob/main/README-DEV.md)
 
 ## 📊 Diagramas
 → [Ver diagramas do projeto](#)
+
