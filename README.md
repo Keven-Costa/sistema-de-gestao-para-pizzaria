@@ -31,9 +31,26 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 - [Licença](#-licença)
 
 
-## 📷 Imagens do Projeto <a id="imagens-do-projeto"></a>
+## 📷 Imagens do Projeto <a id="imagens-projeto"></a>
 
-![Imagens do projeto](telas-projetos.gif)
+| ![Tela 1](imagens-projeto/tela1.png) | ![Tela 2](imagens-projeto/tela1-2.png) |
+|:---:|:---:|
+|                         Home      |
+
+
+| ![Tela 3](imagens-projeto/tela2.png) | ![Tela 4](imagens-projeto/tela4.png) |
+|:---:|:---:|
+| Tela 3 | Tela 4 |
+
+| ![Tela 5](imagens-projeto/tela5.png) | ![Tela 6](imagens-projeto/tela6.png) |
+|:---:|:---:|
+| Tela 5 | Tela 6 |
+
+
+| ![Tela 7](imagens-projeto/tela7.png) | ![Tela 8](imagens-projeto/tela8.png) |
+|:---:|:---:|
+| Tela 7 | Tela 8 |
+
 
 
 
