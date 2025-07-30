@@ -20,38 +20,15 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 
 ## 📌 Índice
 
-- [Imagens do Projeto](#tecnologias-utilizadas)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Funcionalidades Implementadas](#-funcionalidades-implementadas)
+- [Funcionalidades Implementadas](#funcionalidades-implementadas)
 - [Estrutura de Rotas](#estrutura-de-rotas)
-- [Acesso Administrativo](#-acesso-administrativo)
+- [Acesso Administrativo](#acesso-administrativo)
 - [Pré-requisitos](#pre-requisitos)
 - [Execução](#execucao)
-- [Diagramas](#-diagramas)
-- [Licença](#-licença)
-
-
-## 📷 Imagens do Projeto <a id="imagens-projeto"></a>
-
-
-| <img src="imagens-projeto/tela1.png" width="300"> | <img src="imagens-projeto/tela1-2.png" width="300"> |
-|:---:|:---:|
-|                         Home      |
-
-
-| <img src="imagens-projeto/tela2.png" width="300"> | <img src="imagens-projeto/tela4.png" width="300"> |
-|:---:|:---:|
-| Montagem do pedido  | Informação do pedido  |
-
-
-| <img src="imagens-projeto/tela5.png" width="300"> | <img src="imagens-projeto/tela6.png" width="300"> |
-|:---:|:---:|
-| Acompanhamento do Pedido | Dashboard |
-
-| <img src="imagens-projeto/tela7.png" width="300"> | <img src="imagens-projeto/tela8.png" width="300"> |
-|:---:|:---:|
-| Gerenciar Cupons | Gerenciamento de pedido |
-
+- [Diagramas](#diagramas)
+- [Principais Problemas](#principais-problemas)
+- [Imagens e Visualização das telas](#imagens-projeto)
 
 
 ## <a id="tecnologias-utilizadas"></a> 🛠️ Tecnologias Utilizadas
@@ -64,7 +41,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 | Frontend       | Thymeleaf, Bootstrap 5                   |
 | Infra          | Docker, Docker Compose                   |
 
-## 🎯 Funcionalidades Implementadas
+## <a id="funcionalidades-implementadas"></a> 🎯 Funcionalidades Implementadas
 
 ### Área do Cliente
 - ✔️ Montagem interativa de pedidos
@@ -99,7 +76,7 @@ Projeto pessoal desenvolvido para fins de aprendizagem, implementando um sistema
 | `/admin/painel-promocoes`     | Gestão de promoções           |
 | `/admin/gerenciar-pizzas`     | Administração do cardápio     |
 
-## 🔐 Acesso Administrativo
+## <a id="acesso-administrativo"></a> 🔐 Acesso Administrativo
 
 Para acessar a área administrativa:
 
@@ -189,8 +166,71 @@ Após a execução do comando acima, a aplicação estará rodando em http://loc
 
 ## Rodar a aplicação como desenvolvedor
 
-[Acesse aqui](#https://github.com/Keven-Costa/sistema-de-gestao-para-pizzaria/blob/main/README-DEV.md)
+→[Acesse aqui](https://github.com/Keven-Costa/sistema-de-gestao-para-pizzaria/blob/main/README-DEV.md)
 
-## 📊 Diagramas
-→ [Ver diagramas do projeto](#)
+##  <a id="diagramas"></a> 📊 Diagramas
+→ [Ver diagramas do projeto](https://github.com/Keven-Costa/sistema-de-gestao-para-pizzaria/blob/main/diagramas.md)
 
+
+## <a id="principais-problemas"></a> 🔍 Principais Problemas 
+
+O projeto resolve esses problemas
+
+<details>
+  <summary><strong>1. Pedidos feitos por telefone/WhatsApp geram erros no registro</strong></summary>
+  
+  **Situação atual**: Os pedidos são anotados manualmente por atendentes via telefone ou WhatsApp.  
+  **Exemplo**: O atendente entende "frango com cheddar" como "frango com catupiry" e registra o pedido errado, gerando insatisfação no cliente.  
+  **Solução**: O sistema permite que o próprio cliente monte seu pedido com todos os detalhes (sabores, adicionais, endereço), reduzindo erros de interpretação.
+</details>
+
+<details>
+  <summary><strong>2. Dificuldade em rastrear o status das entregas</strong></summary>
+  
+  **Situação atual**: O cliente precisa ligar ou mandar mensagem para saber se o pedido já saiu ou foi entregue.  
+  **Exemplo**: Um cliente liga 3 vezes perguntando se o motoboy já saiu, e o atendente precisa verificar manualmente com a cozinha.  
+  **Solução**: O sistema exibe o status do pedido em tempo real (ex: "em preparo", "saiu para entrega", "entregue"), acessível pelo próprio cliente.
+</details>
+
+<details>
+  <summary><strong>3. Controle manual de estoque de ingredientes</strong></summary>
+  
+  **Situação atual**: A quantidade de ingredientes é controlada em planilhas ou cadernos.
+ 
+  **Solução**: O sistema exibi o status do ingrediente
+</details>
+
+<details>
+  <summary><strong>4. Dificuldade em gerenciar promoções e descontos</strong></summary>
+  
+  **Situação atual**: Promoções são anunciadas apenas no WhatsApp ou em panfletos, sem integração com o sistema.  
+  **Exemplo**: Um cliente tenta usar um cupom de "10% OFF" que já expirou, mas o atendente não tem como verificar.  
+  **Solução**: Sistema integrado com validação automática de cupons e aplicação de descontos.
+</details>
+
+<details>
+  <summary><strong>5. Ausência de relatórios para gestão</strong></summary>
+  
+  **Situação atual**: Gerente não sabe quais sabores mais saem ou quanto vende por dia.  
+  **Problema**: Dificuldade em tomar decisões baseadas em dados.  
+  **Solução**: Relatórios automáticos de vendas, ingredientes mais usados e desempenho financeiro.
+</details>
+
+<details>
+  <summary><strong>6. Gestão do cardápio</strong></summary>
+  
+  **Solução**: Atualização centralizada do cardápio com fotos, preços e disponibilidade em tempo real.
+</details>
+
+## 📷 Imagens e Visualização das telas <a id="imagens-projeto"></a>
+
+→[Repositório para visualização das telas](https://github.com/Keven-Costa/telas-do-projeto)
+
+![Texto alternativo](imagens-das-telas/tela1.png)
+![Texto alternativo](imagens-das-telas/tela1-2.png)
+![Texto alternativo](imagens-das-telas/tela2.png)
+![Texto alternativo](imagens-das-telas/tela3.png)
+![Texto alternativo](imagens-das-telas/tela4.png)
+![Texto alternativo](imagens-das-telas/tela5.png)
+![Texto alternativo](imagens-das-telas/tela6.png)
+![Texto alternativo](imagens-das-telas/tela7.png)
